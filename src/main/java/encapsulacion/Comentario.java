@@ -6,7 +6,13 @@ public class Comentario {
     private Articulo articulo;
     private Usuario autor;
 
-    public Comentario() {
+    public Comentario() {}
+    
+    public Comentario(long id, String comentario, Articulo articulo, Usuario autor) {
+        this.id = id;
+        this.comentario = comentario;
+        this.articulo = articulo;
+        this.autor = autor;
     }
 
     public long getId() {
@@ -41,4 +47,13 @@ public class Comentario {
         this.autor = autor;
     }
 
+    @Override
+    public String toString() {
+        return "Comentario{" +
+                "id=" + id +
+                ", comentario='" + comentario + '\'' +
+                ", articulo=" + articulo +
+                ", autor=" + autor +
+                '}';
+    }
 }

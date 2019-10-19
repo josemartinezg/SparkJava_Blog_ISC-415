@@ -10,7 +10,14 @@ public class Usuario {
     private boolean administrator;
     private boolean author;
 
-    public Usuario() {
+    public Usuario() {}
+
+    public Usuario(String username, String nombre, Articulo password, boolean administrator, boolean author) {
+        this.username = username;
+        this.nombre = nombre;
+        this.password = password;
+        this.administrator = administrator;
+        this.author = author;
     }
 
     public String getUsername() {
@@ -48,10 +55,17 @@ public class Usuario {
     public boolean isAuthor() {
         return author;
     }
-
     public void setAuthor(boolean author) {
         this.author = author;
     }
-
-
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "username='" + username + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", password=" + password +
+                ", administrator=" + administrator +
+                ", autohor=" + author +
+                '}';
+    }
 }
