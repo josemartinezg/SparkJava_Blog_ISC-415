@@ -8,14 +8,14 @@ public class Usuario {
     private String nombre;
     private Articulo password;
     private boolean administrator;
-    private boolean autohor;
+    private boolean author;
 
-    public Usuario(String username, String nombre, Articulo password, boolean administrator, boolean autohor) {
+    public Usuario(String username, String nombre, Articulo password, boolean administrator, boolean author) {
         this.username = username;
         this.nombre = nombre;
         this.password = password;
         this.administrator = administrator;
-        this.autohor = autohor;
+        this.author = author;
     }
 
     public String getUsername() {
@@ -50,12 +50,12 @@ public class Usuario {
         this.administrator = administrator;
     }
 
-    public boolean isAutohor() {
-        return autohor;
+    public boolean isAuthor() {
+        return author;
     }
 
-    public void setAutohor(boolean autohor) {
-        this.autohor = autohor;
+    public void setAuthor(boolean autohor) {
+        this.author = autohor;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class Usuario {
                 ", nombre='" + nombre + '\'' +
                 ", password=" + password +
                 ", administrator=" + administrator +
-                ", autohor=" + autohor +
+                ", autohor=" + author +
                 '}';
     }
 }
