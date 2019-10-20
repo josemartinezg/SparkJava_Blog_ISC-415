@@ -18,11 +18,15 @@ public class Main {
         }
         //usuarioDao.save(new Usuario("jtmlmasxs", "Tomasss", "ljf4656d", false, true));
         System.out.println(usuarioDao.getAll());
-        Usuario user= usuarioDao.get("chema").get(0);
-        System.out.println(user);
+        Usuario selectedUser= usuarioDao.get("chema").get(0);
+        System.out.println(selectedUser);
         //Update works
-        userDao.update(new Usuario(user.getUsername(), user.getNombre(), "plepla", user.isAdministrator(),
+        userDao.update(new Usuario(selectedUser.getUsername(), selectedUser.getNombre(), "plepla",
+                selectedUser.isAdministrator(),
                 true));
+        System.out.println(usuarioDao.getAll());
+        userDao.delete(selectedUser);
+        userDao.delete(selectedUser);
         System.out.println(usuarioDao.getAll());
 
 

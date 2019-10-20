@@ -15,10 +15,15 @@ public class UsuarioDao implements Dao<Usuario> {
     public UsuarioDao(){
         //subiendola en modo Embedded
         this.sql2o = new Sql2o("jdbc:h2:~/demosql2o2", "sa", "");
-        crearTabla();
+        createTable();
         cargaDemo();
     }
     private void crearTabla(){
+
+    }
+
+    @Override
+    public void createTable() {
         String sql="CREATE TABLE IF NOT EXISTS usuario(username VARCHAR(124) PRIMARY KEY NOT NULL, nombre VARCHAR(100)," +
                 "password VARCHAR(100) NOT NULL, administrator BOOL NOT NULL, author BOOL NOT NULL);";
         try(Connection con = sql2o.open()){
@@ -81,7 +86,12 @@ public class UsuarioDao implements Dao<Usuario> {
 
     @Override
     public void delete(Usuario usuario) {
-
+        String updateSql = "DELETE FROM usuario WHERE username = :username";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(updateSql)
+                    .addParameter("username", usuario.getUsername())
+                    .executeUpdate();
+        }
     }
 
         private void cargaDemo(){
