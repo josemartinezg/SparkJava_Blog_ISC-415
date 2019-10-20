@@ -61,10 +61,22 @@ public class UsuarioDao implements Dao<Usuario> {
         }
         misUsuarios.add(usuario);
     }
-
+    /*Buscar en el enrutamiento el usuario que coincida con el username en la db y agarrar lo que mande el UI del
+    formulario, el formulario debe de autocompletarse con la informacion vieja para que esto funcione.
+     */
     @Override
-    public void update(Usuario usuario, String[] params) {
-
+    public void update(Usuario usuario) {
+        String updateSql = "UPDATE usuario SET nombre = :nombre, password = :pass, administrator = :admin, " +
+                "author = :author where username = :username";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(updateSql)
+                .addParameter("nombre", usuario.getNombre())
+                .addParameter("pass", usuario.getPassword())
+                .addParameter("admin", usuario.isAdministrator())
+                .addParameter("author", usuario.isAuthor())
+                .addParameter("username", usuario.getUsername())
+                .executeUpdate();
+        }
     }
 
     @Override

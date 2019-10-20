@@ -18,7 +18,13 @@ public class Main {
         }
         //usuarioDao.save(new Usuario("jtmlmasxs", "Tomasss", "ljf4656d", false, true));
         System.out.println(usuarioDao.getAll());
-        System.out.println(usuarioDao.get("chema"));
+        Usuario user= usuarioDao.get("chema").get(0);
+        System.out.println(user);
+        //Update works
+        userDao.update(new Usuario(user.getUsername(), user.getNombre(), "plepla", user.isAdministrator(),
+                true));
+        System.out.println(usuarioDao.getAll());
+
 
 //        Usuario user1 = getUser(0);
 //        System.out.println(user1);
