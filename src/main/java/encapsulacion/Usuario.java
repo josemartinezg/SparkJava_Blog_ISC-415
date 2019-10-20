@@ -6,13 +6,13 @@ import java.util.Date;
 public class Usuario {
     private String username;
     private String nombre;
-    private Articulo password;
+    private String password;
     private boolean administrator;
     private boolean author;
 
     public Usuario() {}
 
-    public Usuario(String username, String nombre, Articulo password, boolean administrator, boolean author) {
+    public Usuario(String username, String nombre, String password, boolean administrator, boolean author) {
         this.username = username;
         this.nombre = nombre;
         this.password = password;
@@ -36,11 +36,11 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public Articulo getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(Articulo password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
