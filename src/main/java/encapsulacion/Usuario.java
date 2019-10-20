@@ -20,6 +20,7 @@ public class Usuario {
         this.author = author;
     }
 
+
     public String getUsername() {
         return username;
     }
@@ -54,7 +55,7 @@ public class Usuario {
 
     public boolean isAuthor() {
         return author;
-    }
+    }   
     public void setAuthor(boolean author) {
         this.author = author;
     }
