@@ -85,7 +85,7 @@ public class Main {
             return "";
         });
 
-        /*userDao = new UsuarioDao();
+        userDao = new UsuarioDao();
         System.out.println("Prueba Dao");
         UsuarioDao usuarioDao = new UsuarioDao();
         List<Usuario> allEstudiante = usuarioDao.getAll();
@@ -93,14 +93,14 @@ public class Main {
             System.out.printf("Username: %s - Nombre: %s\n",
                     estudiante.getUsername(), estudiante.getNombre());
         }
-        //usuarioDao.save(new Usuario("jtmlmasxs", "Tomasss", "ljf4656d", false, true));
+        usuarioDao.save(new Usuario("jtmlmass", "Tomas", "ljf4656d", false, true));
         System.out.println(usuarioDao.getAll());
         Usuario user= usuarioDao.get("chema").get(0);
         System.out.println(user);
         //Update works
         userDao.update(new Usuario(user.getUsername(), user.getNombre(), "plepla", user.isAdministrator(),
                 true));
-        System.out.println(usuarioDao.getAll());*/
+        System.out.println(usuarioDao.getAll());
 
 
 //        Usuario user1 = getUser(0);
