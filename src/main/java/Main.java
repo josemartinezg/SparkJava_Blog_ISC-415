@@ -48,6 +48,22 @@ public class Main {
             return new ModelAndView(attributes, "home.ftl");
         }, freeMarkerEngine);
 
+        Spark.get("/post", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("titulo", "Login");
+            Session session=request.session(true);
+            attributes.put("usuario", session.attribute("usuario"));
+            return new ModelAndView(attributes, "post.ftl");
+        }, freeMarkerEngine);
+
+        Spark.get("/author", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("titulo", "Login");
+            Session session=request.session(true);
+            attributes.put("usuario", session.attribute("usuario"));
+            return new ModelAndView(attributes, "author.ftl");
+        }, freeMarkerEngine);
+
         Spark.post("/hacerLogin/", (request, response)->{
             //
             Session session=request.session(true);
