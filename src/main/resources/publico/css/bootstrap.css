@@ -48,6 +48,10 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+html body {
+  background-color: darkgreen;
+}
+
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
@@ -2421,14 +2425,14 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #28a745;
+  border-color: #28a745;
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #248d3d;
+  border-color: #1a682f;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -2692,14 +2696,14 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-primary {
-  color: #007bff;
-  border-color: #007bff;
+  color: #28a745;
+  border-color: #28a745;
 }
 
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #28a745;
+  border-color: #28a745;
 }
 
 .btn-outline-primary:focus, .btn-outline-primary.focus {
