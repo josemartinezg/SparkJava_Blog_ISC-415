@@ -20,13 +20,17 @@ public class ComentarioDao implements  Dao<Comentario> {
 
     @Override
     public void createTable() {
-        String sql="CREATE TABLE IF NOT EXISTS comentario(id integer PRIMARY KEY AUTO_INCREMENT NOT NULL, " +
+        String sql="CREATE TABLE IF NOT EXISTS comentario(" +
+                "id integer PRIMARY KEY AUTO_INCREMENT NOT NULL, " +
                 "comentario VARCHAR(1000) NOT NULL," +
                 "articulo INTEGER NOT NULL, " +
-                "autor varchar(124) NOT NULL, " +
-                "foreign key (autor) refrences usuario (username)," +
-                "foreign key (articulo) refrences articulo (id)," +
-                "foreign key (comentario) refrences comentario (id);";
+                "autor varchar(124) NOT NULL,);" +
+                "ALTER TABLE comentario\n" +
+                "    ADD FOREIGN KEY (autor) \n" +
+                "    REFERENCES usuario (username);" +
+                "ALTER TABLE comentario\n" +
+                "    ADD FOREIGN KEY (articulo) \n" +
+                "    REFERENCES articulo (id);";
         try(Connection con = sql2o.open()){
             con.createQuery(sql).executeUpdate();
         }

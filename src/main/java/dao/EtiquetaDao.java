@@ -17,8 +17,9 @@ public class EtiquetaDao implements Dao<Etiqueta> {
 
     @Override
     public void createTable() {
-        String sql="CREATE TABLE IF NOT EXISTS articulo(id integer PRIMARY KEY AUTO_INCREMENT NOT NULL, " +
-                "etiqueta VARCHAR(255);";
+        String sql="CREATE TABLE IF NOT EXISTS etiqueta(" +
+                "id integer PRIMARY KEY AUTO_INCREMENT NOT NULL, " +
+                "etiqueta VARCHAR(255) NOT NULL,);";
         try(Connection con = sql2o.open()){
             con.createQuery(sql).executeUpdate();
         }

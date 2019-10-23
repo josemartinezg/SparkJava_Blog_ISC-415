@@ -12,6 +12,21 @@ public class Articulo {
 
     public Articulo() {
     }
+    public Articulo(String titulo, String cuerpo, Usuario autor, Date fehca) {
+        this.titulo = titulo;
+        this.cuerpo = cuerpo;
+        this.autor = autor;
+        this.fecha = fehca;
+        this.listaComentarios = listaComentarios;
+        this.listaEtiquetas = listaEtiquetas;
+    }
+    public Articulo(long id, String titulo, String cuerpo, Usuario autor, Date fehca) {
+        this.id = id;
+        this.titulo = titulo;
+        this.cuerpo = cuerpo;
+        this.autor = autor;
+        this.fecha = fehca;
+    }
 
     public long getId() {
         return id;
@@ -71,16 +86,6 @@ public class Articulo {
 
     private ArrayList<Comentario> listaComentarios;
     private ArrayList<Etiqueta> listaEtiquetas;
-
-    public Articulo(long id, String titulo, String cuerpo, Usuario autor, Date fehca, ArrayList<Comentario> listaComentarios, ArrayList<Etiqueta> listaEtiquetas) {
-        this.id = id;
-        this.titulo = titulo;
-        this.cuerpo = cuerpo;
-        this.autor = autor;
-        this.fecha = fehca;
-        this.listaComentarios = listaComentarios;
-        this.listaEtiquetas = listaEtiquetas;
-    }
 
 
     @Override

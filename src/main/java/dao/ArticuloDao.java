@@ -20,9 +20,15 @@ public class ArticuloDao implements Dao<Articulo> {
 
     @Override
     public void createTable() {
-        String sql="CREATE TABLE IF NOT EXISTS articulo(id integer PRIMARY KEY AUTO_INCREMENT NOT NULL, titulo VARCHAR(255)," +
-                "cuerpo LONGTEXT NOT NULL, author BOOL NOT NULL, fecha DATETIME NOT NULL, " +
-                "foreign key (author) refrences usuario (username);";
+        String sql="CREATE TABLE IF NOT EXISTS articulo(" +
+                "id integer PRIMARY KEY AUTO_INCREMENT NOT NULL, " +
+                "titulo VARCHAR(255) NOT NULL," +
+                "cuerpo LONGTEXT NOT NULL, " +
+                "autor VARCHAR(124) NOT NULL, " +
+                "fecha DATETIME NOT NULL,);" +
+                "ALTER TABLE articulo\n" +
+                "    ADD FOREIGN KEY (autor) \n" +
+                "    REFERENCES usuario (username);";
         try(Connection con = sql2o.open()){
             con.createQuery(sql).executeUpdate();
         }
@@ -33,7 +39,7 @@ public class ArticuloDao implements Dao<Articulo> {
         String sql="select * from articulo where id = :id;";
         try(Connection con = sql2o.open()){
             return con.createQuery(sql)
-                    .addParameter("id", id)
+                    .addParameter("id", Integer.parseInt(id))
                     .executeAndFetch(Articulo.class);
         }
     }
@@ -42,14 +48,15 @@ public class ArticuloDao implements Dao<Articulo> {
     public List<Articulo> getAll() {
         String sql="select * from articulo";
         try(Connection con = sql2o.open()){
-            return con.createQuery(sql).executeAndFetch(Articulo.class);
+            return con.createQuery(sql)
+                    .executeAndFetch(Articulo.class);
         }
     }
 
     @Override
     public void save(Articulo articulo) {
         String insertSql =
-                "insert into usuario(titulo, cuerpo, autor, fecha) " +
+                "insert into articulo(titulo, cuerpo, autor, fecha) " +
                         "values (:titulo, :cuerpo, :autor, :fecha)";
 
         try (Connection con = sql2o.open()) {
