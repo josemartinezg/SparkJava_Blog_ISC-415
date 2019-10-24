@@ -5,6 +5,9 @@ public class Etiqueta {
     private String etiqueta;
 
     public Etiqueta() {}
+    public Etiqueta (String etiqueta) {
+        this.etiqueta = etiqueta;
+    }
     public Etiqueta(long id, String etiqueta) {
         this.id = id;
         this.etiqueta = etiqueta;

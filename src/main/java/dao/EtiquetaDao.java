@@ -54,11 +54,11 @@ public class EtiquetaDao implements Dao<Etiqueta> {
                     .executeUpdate();
         }
     }
-
+//Revisar que semilla tiene de malo este query...
     @Override
     public void update(Etiqueta etiqueta) {
         String updateSql = "UPDATE etiqueta SET etiqueta = :etiqueta" +
-                "where id = :id";
+                "where id = :id;";
         try (Connection con = sql2o.open()) {
             con.createQuery(updateSql)
                     .addParameter("etiqueta", etiqueta.getEtiqueta())
@@ -69,7 +69,7 @@ public class EtiquetaDao implements Dao<Etiqueta> {
 
     @Override
     public void delete(Etiqueta etiqueta) {
-        String updateSql = "DELETE FROM etiqueta WHERE id = :id";
+        String updateSql = "DELETE FROM etiqueta WHERE id = :id;";
         try (Connection con = sql2o.open()) {
             con.createQuery(updateSql)
                     .addParameter("id", etiqueta.getId())

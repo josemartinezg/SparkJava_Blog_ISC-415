@@ -46,10 +46,9 @@ public class ArticuloDao implements Dao<Articulo> {
 
     @Override
     public List<Articulo> getAll() {
-        String sql="select * from articulo";
+        String sql="select * from articulo;";
         try(Connection con = sql2o.open()){
-            return con.createQuery(sql)
-                    .executeAndFetch(Articulo.class);
+            return con.createQuery(sql).executeAndFetch(Articulo.class);
         }
     }
 
@@ -63,7 +62,7 @@ public class ArticuloDao implements Dao<Articulo> {
             con.createQuery(insertSql)
                     .addParameter("titulo", articulo.getTitulo())
                     .addParameter("cuerpo", articulo.getCuerpo())
-                    .addParameter("autor", articulo.getAutor().getUsername())
+                    .addParameter("autor", articulo.getAutor())
                     .addParameter("fecha", articulo.getFecha())
                     .executeUpdate();
         }
@@ -78,7 +77,7 @@ public class ArticuloDao implements Dao<Articulo> {
             con.createQuery(updateSql)
                     .addParameter("titulo", articulo.getTitulo())
                     .addParameter("cuerpo", articulo.getCuerpo())
-                    .addParameter("autor", articulo.getAutor().getUsername())
+                    .addParameter("autor", articulo.getAutor())
                     .addParameter("fecha", articulo.getFecha())
                     .addParameter("id", articulo.getId())
                     .executeUpdate();

@@ -41,7 +41,7 @@ public class ComentarioDao implements  Dao<Comentario> {
         String sql="select * from comentario where id = :id;";
         try(Connection con = sql2o.open()){
             return con.createQuery(sql)
-                    .addParameter("id", id)
+                    .addParameter("id", Integer.parseInt(id))
                     .executeAndFetch(Comentario.class);
         }
     }
@@ -63,23 +63,23 @@ public class ComentarioDao implements  Dao<Comentario> {
         try (Connection con = sql2o.open()) {
             con.createQuery(insertSql)
                     .addParameter("comentario", comentario.getComentario())
-                    .addParameter("articulo", comentario.getArticulo().getId())
-                    .addParameter("autor", comentario.getAutor().getUsername())
+                    .addParameter("articulo", comentario.getArticulo())
+                    .addParameter("autor", comentario.getAutor())
                     .executeUpdate();
         }
     }
 
     @Override
     public void update(Comentario comentario) {
-        String updateSql = "UPDATE articulo SET comentario = :comentario, " +
+        String updateSql = "UPDATE comentario SET comentario = :comentario, " +
                 "articulo = :articulo, " +
-                "autor = :autor, " +
-                "where id = :id";
+                "autor = :autor " +
+                "where id = :id;";
         try (Connection con = sql2o.open()) {
             con.createQuery(updateSql)
                     .addParameter("comentario", comentario.getComentario())
-                    .addParameter("articulo", comentario.getArticulo().getId())
-                    .addParameter("autor", comentario.getAutor().getUsername())
+                    .addParameter("articulo", comentario.getArticulo())
+                    .addParameter("autor", comentario.getAutor())
                     .addParameter("id", comentario.getId())
                     .executeUpdate();
         }

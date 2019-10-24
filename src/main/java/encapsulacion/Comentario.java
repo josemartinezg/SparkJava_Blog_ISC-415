@@ -3,13 +3,18 @@ package encapsulacion;
 public class Comentario {
     private long id;
     private String comentario;
-    private Articulo articulo;
-    private Usuario autor;
+    private int articulo;
+    private String autor;
 
     public Comentario() {}
     
-    public Comentario(long id, String comentario, Articulo articulo, Usuario autor) {
+    public Comentario(long id, String comentario, int articulo, String autor) {
         this.id = id;
+        this.comentario = comentario;
+        this.articulo = articulo;
+        this.autor = autor;
+    }
+    public Comentario(String comentario, int articulo, String autor) {
         this.comentario = comentario;
         this.articulo = articulo;
         this.autor = autor;
@@ -31,19 +36,19 @@ public class Comentario {
         this.comentario = comentario;
     }
 
-    public Articulo getArticulo() {
+    public int getArticulo() {
         return articulo;
     }
 
-    public void setArticulo(Articulo articulo) {
+    public void setArticulo(int articulo) {
         this.articulo = articulo;
     }
 
-    public Usuario getAutor() {
+    public String getAutor() {
         return autor;
     }
 
-    public void setAutor(Usuario autor) {
+    public void setAutor(String autor) {
         this.autor = autor;
     }
 
