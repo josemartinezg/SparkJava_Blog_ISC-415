@@ -96,6 +96,14 @@ public class Articulo {
 //    private ArrayList<Etiqueta> listaEtiquetas;
 
 
+    public Date getFehca() {
+        return fecha;
+    }
+
+    public void setFehca(Date fecha) {
+        this.fecha = fecha;
+    }
+
     @Override
     public String toString() {
         return "Articulo{" +
@@ -106,6 +114,7 @@ public class Articulo {
                 ", fehca=" + fecha +
 //                ", listaComentarios=" + listaComentarios +
 //                ", listaEtiquetas=" + listaEtiquetas +
+
                 '}';
     }
 }
