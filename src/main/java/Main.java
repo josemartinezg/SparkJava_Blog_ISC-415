@@ -41,6 +41,8 @@ public class Main {
 
         before("*", (request, response) -> {
             Session session = request.session(true);
+            if(session.attribute("usuario") == null)
+                session.attribute("usuario", "");
         });
 
         Spark.get("/login", (request, response) -> {
