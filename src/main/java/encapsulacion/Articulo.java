@@ -7,10 +7,33 @@ public class Articulo {
     private long id;
     private String titulo;
     private String cuerpo;
-    private Usuario autor;
+    private String autor;
+    private int etiqueta;
     private Date fecha;
 
+    public int getEtiqueta() {
+        return etiqueta;
+    }
+
+    public void setEtiqueta(int etiqueta) {
+        this.etiqueta = etiqueta;
+    }
+
+
     public Articulo() {
+    }
+    public Articulo(String titulo, String cuerpo, String autor, Date fecha, int etiqueta) {
+        this.titulo = titulo;
+        this.cuerpo = cuerpo;
+        this.autor = autor;
+        this.fecha = fecha;
+    }
+    public Articulo(long id, String titulo, String cuerpo, String autor, Date fecha, int etiqueta) {
+        this.id = id;
+        this.titulo = titulo;
+        this.cuerpo = cuerpo;
+        this.autor = autor;
+        this.fecha = fecha;
     }
 
     public long getId() {
@@ -37,11 +60,11 @@ public class Articulo {
         this.cuerpo = cuerpo;
     }
 
-    public Usuario getAutor() {
+    public String getAutor() {
         return autor;
     }
 
-    public void setAutor(Usuario autor) {
+    public void setAutor(String autor) {
         this.autor = autor;
     }
 
@@ -52,35 +75,25 @@ public class Articulo {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+//
+//    public ArrayList<Comentario> getListaComentarios() {
+//        return listaComentarios;
+//    }
+//
+//    public void setListaComentarios(ArrayList<Comentario> listaComentarios) {
+//        this.listaComentarios = listaComentarios;
+//    }
+//
+//    public ArrayList<Etiqueta> getListaEtiquetas() {
+//        return listaEtiquetas;
+//    }
+//
+//    public void setListaEtiquetas(ArrayList<Etiqueta> listaEtiquetas) {
+//        this.listaEtiquetas = listaEtiquetas;
+//    }
 
-    public ArrayList<Comentario> getListaComentarios() {
-        return listaComentarios;
-    }
-
-    public void setListaComentarios(ArrayList<Comentario> listaComentarios) {
-        this.listaComentarios = listaComentarios;
-    }
-
-    public ArrayList<Etiqueta> getListaEtiquetas() {
-        return listaEtiquetas;
-    }
-
-    public void setListaEtiquetas(ArrayList<Etiqueta> listaEtiquetas) {
-        this.listaEtiquetas = listaEtiquetas;
-    }
-
-    private ArrayList<Comentario> listaComentarios;
-    private ArrayList<Etiqueta> listaEtiquetas;
-
-    public Articulo(long id, String titulo, String cuerpo, Usuario autor, Date fehca, ArrayList<Comentario> listaComentarios, ArrayList<Etiqueta> listaEtiquetas) {
-        this.id = id;
-        this.titulo = titulo;
-        this.cuerpo = cuerpo;
-        this.autor = autor;
-        this.fecha = fehca;
-        this.listaComentarios = listaComentarios;
-        this.listaEtiquetas = listaEtiquetas;
-    }
+//    private ArrayList<Comentario> listaComentarios;
+//    private ArrayList<Etiqueta> listaEtiquetas;
 
 
     @Override
@@ -91,8 +104,8 @@ public class Articulo {
                 ", cuerpo='" + cuerpo + '\'' +
                 ", autor=" + autor +
                 ", fehca=" + fecha +
-                ", listaComentarios=" + listaComentarios +
-                ", listaEtiquetas=" + listaEtiquetas +
+//                ", listaComentarios=" + listaComentarios +
+//                ", listaEtiquetas=" + listaEtiquetas +
                 '}';
     }
 }
