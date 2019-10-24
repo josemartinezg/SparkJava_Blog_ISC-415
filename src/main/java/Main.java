@@ -158,12 +158,7 @@ public class Main {
         });
 
         Spark.get("/", (request, response) -> {
-            Usuario usuario = request.session(true).attribute("usuario");
-            if (usuario == null) {
-                response.redirect("/login");
-            } else {
-                response.redirect("/home");
-            }
+            response.redirect("/home");
             return "";
         });
     }

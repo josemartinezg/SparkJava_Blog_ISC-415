@@ -17,10 +17,18 @@
     <div class="container">
         <div class="row justify-content-center">
             <aside class="col-md-6">
-                <div class="card">
+                <div class="card shadow-lg">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col justify-content-md-start">
+                                <h2 class="align-self-center"><strong>Sign in</strong></h2>
+                            </div>
+                            <div class="col justify-content-end">
+                                <a href="/register" class="float-right btn btn-outline-primary">Sign up</a>
+                            </div>
+                        </div>
+                    </div>
                     <article class="card-body">
-                        <a href="/register" class="float-right btn btn-outline-primary">Sign up</a>
-                        <h4 class="card-title mb-4 mt-1">Sign in</h4>
                         <form action="/hacerLogin/" method="post"  enctype="application/x-www-form-urlencoded">
                             <div class="row">
                                 <div class="col form-group">

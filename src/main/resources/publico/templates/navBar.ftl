@@ -30,10 +30,10 @@
             <!-- End Search -->
             <!-- User info -->
             <#if usuario == "">
-                <button type="submit" class="btn btn-outline-primary btn-block"> Login  </button>
+                <a href="/login" class="float-right btn btn-outline-light">Sign up/Login</a>
             </#if>
             <#if usuario != "">
-                <button type="submit" class="btn btn-outline-danger btn-block"> Log out  </button>
+                <a href="/hacerLogout" class="float-right btn btn-outline-danger">Log out</a>
             </#if>
         </div>
     </div>
