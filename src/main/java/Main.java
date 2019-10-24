@@ -41,6 +41,8 @@ public class Main {
 
         before("*", (request, response) -> {
             Session session = request.session(true);
+            if(session.attribute("usuario") == null)
+                session.attribute("usuario", "");
         });
 
         Spark.get("/login", (request, response) -> {
@@ -100,18 +102,15 @@ public class Main {
         }, freeMarkerEngine);
 
         Spark.post("/hacerLogin/", (request, response) -> {
-            //
             Session session = request.session(true);
-            //
             List<Usuario> usuarios = usuarioDao.getAll();
-            Usuario usuario = null;//FakeServices.getInstancia().autenticarUsuario(request.params("usuario"), request.params("contrasena"));
+            Usuario usuario = null;
+            String username = request.queryParams("username");
+            String password = request.queryParams("password");
             for (Usuario u : usuarios){
                 System.out.println(u.toString());
-                if (request.queryParams("username").equalsIgnoreCase(u.getUsername()) && request.queryParams("password").equals(u.getPassword())) {
-                    //Buscar el usuario en la base de datos..
+                if (username.equalsIgnoreCase(u.getUsername()) && password.equals(u.getPassword())) {
                     usuario = new Usuario(u.getUsername(), u.getNombre(), u.getPassword(), u.isAdministrator(), u.isAuthor());
-                } else {
-                    response.redirect("/login");
                 }
             }
 

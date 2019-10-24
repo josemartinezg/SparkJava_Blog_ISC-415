@@ -29,10 +29,10 @@
             </form>
             <!-- End Search -->
             <!-- User info -->
-            <#if usuario == null>
+            <#if usuario == "">
                 <button type="submit" class="btn btn-outline-primary btn-block"> Login  </button>
             </#if>
-            <#if usuario != null>
+            <#if usuario != "">
                 <button type="submit" class="btn btn-outline-danger btn-block"> Log out  </button>
             </#if>
         </div>
