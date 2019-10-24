@@ -16,28 +16,29 @@
     <br/>
     <div class="container">
         <div class="row justify-content-center">
-            <aside class="col-lg-9">
+            <aside class="col-md-6">
                 <div class="card">
-                    <div class="card-header">
-                        <a href="/login"><img class="card-img" src="https://imgur.com/a/vnjnIKJ" alt="Sal"></a>
-                    </div>
                     <article class="card-body">
-                        <a href="" class="float-right btn btn-outline-primary">Sign up</a>
+                        <a href="/register" class="float-right btn btn-outline-primary">Sign up</a>
                         <h4 class="card-title mb-4 mt-1">Sign in</h4>
                         <form action="/hacerLogin/" method="post"  enctype="application/x-www-form-urlencoded">
-                            <div class="form-group">
-                                <label>Username</label>
-                                <input name="username" class="form-control" placeholder="Username" type="text">
-                            </div> <!-- form-group// -->
-                            <div class="form-group">
-                                <label> Password</label>
-                                <input name="password" class="form-control" placeholder="******" type="password">
-                            </div> <!-- form-group// -->
-                            <div class="form-group">
-                            </div> <!-- form-group// -->
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block"> Login  </button>
-                            </div> <!-- form-group// -->
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label>Username</label>
+                                    <input name="username" class="form-control" placeholder="Username" type="text">
+                                </div> <!-- form-group// -->
+                            </div>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label> Password</label>
+                                    <input name="password" class="form-control" placeholder="******" type="password">
+                                </div> <!-- form-group// -->
+                            </div>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <button type="submit" class="btn btn-primary btn-block"> Login  </button>
+                                </div> <!-- form-group// -->
+                            </div>
                         </form>
                     </article>
                 </div> <!-- card.// -->
