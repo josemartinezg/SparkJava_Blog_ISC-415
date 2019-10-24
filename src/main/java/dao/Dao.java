@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 public interface Dao<T> {
 
-    List<T> get(String username);
+    void createTable();
+
+    List<T> get(String id);
 
     List<T> getAll();
 
