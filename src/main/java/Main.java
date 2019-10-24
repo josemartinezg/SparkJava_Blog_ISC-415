@@ -126,8 +126,20 @@ public class Main {
             String nombre = request.queryParams("name");
             String username = request.queryParams("username");
             String password = request.queryParams("password");
-            boolean isadmin = request.queryParams("isadmin").equals("on");
-            boolean isauthor = request.queryParams("isauthor").equals("on");
+            boolean isadmin = false;
+            boolean isauthor = false;
+            String auxIsAdmin = request.queryParams("isadmin");
+            String auxIsAuthor = request.queryParams("isauthor");
+            if(auxIsAdmin == null){
+                isadmin = false;
+            }else if(auxIsAdmin.equals("on")){
+                isadmin = true;
+            }
+            if(auxIsAuthor == null){
+                isauthor = false;
+            }else if(auxIsAuthor.equals("on")){
+                isauthor = true;
+            }
             System.out.println(request.queryParams("isauthor"));
             Usuario usuario = new Usuario(username, nombre, password, isadmin, isauthor);
             usuarioDao.save(usuario);
