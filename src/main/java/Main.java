@@ -39,18 +39,20 @@ public class Main {
 
         Usuario admin = new Usuario("admin", "Jose", "admin", true, true);
 
-        before("/home", (request, response) -> {
-            Usuario usuario = request.session(true).attribute("usuario");
-            if (usuario == null) {
-                //parada del request, enviando un codigo.
-                response.redirect("/login");
-            }
+        before("*", (request, response) -> {
+            Session session = request.session(true);
         });
 
         Spark.get("/login", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
             return new ModelAndView(attributes, "login.ftl");
+        }, freeMarkerEngine);
+
+        Spark.get("/register", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("titulo", "Login");
+            return new ModelAndView(attributes, "register.ftl");
         }, freeMarkerEngine);
 
         Spark.get("/home", (request, response) -> {
@@ -61,12 +63,32 @@ public class Main {
             return new ModelAndView(attributes, "home.ftl");
         }, freeMarkerEngine);
 
-        Spark.get("/post", (request, response) -> {
+        Spark.get("/articulo", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
             Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "post.ftl");
+        }, freeMarkerEngine);
+
+        Spark.get("/articulo:id", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            String idArticulo = request.params("id_articulo");
+            Articulo articulo = articuloDao.get(idArticulo).get(0);
+            attributes.put("articulo", articulo);
+            Session session = request.session(true);
+            attributes.put("usuario", session.attribute("usuario"));
+            return new ModelAndView(attributes, "post.ftl");
+        }, freeMarkerEngine);
+
+        Spark.get("/autor:id", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            String username = request.params("username");
+            Usuario author = usuarioDao.get(username).get(0);
+            attributes.put("author", author);
+            Session session = request.session(true);
+            attributes.put("usuario", session.attribute("usuario"));
+            return new ModelAndView(attributes, "author.ftl");
         }, freeMarkerEngine);
 
         Spark.get("/author", (request, response) -> {
@@ -81,17 +103,37 @@ public class Main {
             //
             Session session = request.session(true);
             //
+            List<Usuario> usuarios = usuarioDao.getAll();
             Usuario usuario = null;//FakeServices.getInstancia().autenticarUsuario(request.params("usuario"), request.params("contrasena"));
-            if (request.queryParams("username").equalsIgnoreCase(admin.getUsername()) && request.queryParams("password").equals(admin.getPassword())) {
-                //Buscar el usuario en la base de datos..
-                usuario = new Usuario(admin.getUsername(), admin.getNombre(), admin.getPassword(), admin.isAdministrator(), admin.isAuthor());
-            } else {
-                response.redirect("/login");
+            for (Usuario u : usuarios){
+                System.out.println(u.toString());
+                if (request.queryParams("username").equalsIgnoreCase(u.getUsername()) && request.queryParams("password").equals(u.getPassword())) {
+                    //Buscar el usuario en la base de datos..
+                    usuario = new Usuario(u.getUsername(), u.getNombre(), u.getPassword(), u.isAdministrator(), u.isAuthor());
+                } else {
+                    response.redirect("/login");
+                }
             }
 
             session.attribute("usuario", usuario);
             //redireccionado a la otra URL.
             response.redirect("/home");
+
+            return "";
+        });
+
+        Spark.post("/hacerRegister/", (request, response) -> {
+            String nombre = request.queryParams("name");
+            String username = request.queryParams("username");
+            String password = request.queryParams("password");
+            boolean isadmin = request.queryParams("isadmin").equals("on");
+            boolean isauthor = request.queryParams("isauthor").equals("on");
+            System.out.println(request.queryParams("isauthor"));
+            Usuario usuario = new Usuario(username, nombre, password, isadmin, isauthor);
+            usuarioDao.save(usuario);
+
+            //redireccionado a la otra URL.
+            response.redirect("/login");
 
             return "";
         });
