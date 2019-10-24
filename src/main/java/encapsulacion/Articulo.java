@@ -8,22 +8,32 @@ public class Articulo {
     private String titulo;
     private String cuerpo;
     private String autor;
+    private int etiqueta;
     private Date fecha;
+
+    public int getEtiqueta() {
+        return etiqueta;
+    }
+
+    public void setEtiqueta(int etiqueta) {
+        this.etiqueta = etiqueta;
+    }
+
 
     public Articulo() {
     }
-    public Articulo(String titulo, String cuerpo, String autor, Date fehca) {
+    public Articulo(String titulo, String cuerpo, String autor, Date fecha, int etiqueta) {
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
-        this.fecha = fehca;
+        this.fecha = fecha;
     }
-    public Articulo(long id, String titulo, String cuerpo, String autor, Date fehca) {
+    public Articulo(long id, String titulo, String cuerpo, String autor, Date fecha, int etiqueta) {
         this.id = id;
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
-        this.fecha = fehca;
+        this.fecha = fecha;
     }
 
     public long getId() {

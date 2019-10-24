@@ -25,10 +25,14 @@ public class ArticuloDao implements Dao<Articulo> {
                 "titulo VARCHAR(255) NOT NULL," +
                 "cuerpo LONGTEXT NOT NULL, " +
                 "autor VARCHAR(124) NOT NULL, " +
-                "fecha DATETIME NOT NULL,);" +
+                "fecha DATETIME NOT NULL," +
+                "etiqueta INTEGER NOT NULL);" +
                 "ALTER TABLE articulo\n" +
                 "    ADD FOREIGN KEY (autor) \n" +
-                "    REFERENCES usuario (username);";
+                "    REFERENCES usuario (username);" +
+                "ALTER TABLE articulo\n" +
+                "    ADD FOREIGN KEY (etiqueta) \n" +
+                "    REFERENCES articulo (id);";;
         try(Connection con = sql2o.open()){
             con.createQuery(sql).executeUpdate();
         }
@@ -55,11 +59,12 @@ public class ArticuloDao implements Dao<Articulo> {
     @Override
     public void save(Articulo articulo) {
         String insertSql =
-                "insert into articulo(titulo, cuerpo, autor, fecha) " +
-                        "values (:titulo, :cuerpo, :autor, :fecha)";
+                "insert into articulo(titulo, cuerpo, autor, fecha, etiqueta) " +
+                        "values (:titulo, :cuerpo, :autor, :fecha, :etiqueta)";
 
         try (Connection con = sql2o.open()) {
             con.createQuery(insertSql)
+                    .addParameter("etiqueta", articulo.getEtiqueta())
                     .addParameter("titulo", articulo.getTitulo())
                     .addParameter("cuerpo", articulo.getCuerpo())
                     .addParameter("autor", articulo.getAutor())
@@ -72,9 +77,10 @@ public class ArticuloDao implements Dao<Articulo> {
     @Override
     public void update(Articulo articulo) {
         String updateSql = "UPDATE articulo SET titulo = :titulo, cuerpo = :cuerpo, autor = :autor, " +
-                "fecha = :fecha where id = :id";
+                "fecha = :fecha, etiqueta = :etiqueta where id = :id";
         try (Connection con = sql2o.open()) {
             con.createQuery(updateSql)
+                    .addParameter("etiqueta", articulo.getEtiqueta())
                     .addParameter("titulo", articulo.getTitulo())
                     .addParameter("cuerpo", articulo.getCuerpo())
                     .addParameter("autor", articulo.getAutor())

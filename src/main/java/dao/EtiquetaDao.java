@@ -19,11 +19,7 @@ public class EtiquetaDao implements Dao<Etiqueta> {
     public void createTable() {
         String sql="CREATE TABLE IF NOT EXISTS etiqueta(" +
                 "id integer PRIMARY KEY AUTO_INCREMENT NOT NULL, " +
-                "articulo integer NOT NULL, " +
-                "etiqueta VARCHAR(255) NOT NULL,);" +
-                "ALTER TABLE etiqueta\n" +
-                "    ADD FOREIGN KEY (articulo) \n" +
-                "    REFERENCES articulo (id);";
+                "etiqueta VARCHAR(255) NOT NULL,);";
         try(Connection con = sql2o.open()){
             con.createQuery(sql).executeUpdate();
         }
@@ -50,11 +46,10 @@ public class EtiquetaDao implements Dao<Etiqueta> {
     @Override
     public void save(Etiqueta etiqueta) {
         String insertSql =
-                "insert into etiqueta(articulo, etiqueta) values (:articulo, :tag)";
+                "insert into etiqueta(etiqueta) values (:tag)";
 
         try (Connection con = sql2o.open()) {
             con.createQuery(insertSql)
-                    .addParameter("articulo", etiqueta.getArticulo())
                     .addParameter("tag", etiqueta.getEtiqueta())
                     .executeUpdate();
         }
@@ -62,12 +57,10 @@ public class EtiquetaDao implements Dao<Etiqueta> {
 //Revisar que semilla tiene de malo este query...
     @Override
     public void update(Etiqueta etiqueta) {
-        String updateSql = "UPDATE etiqueta SET etiqueta = :etiqueta," +
-                "articulo = :articulo" +
+        String updateSql = "UPDATE etiqueta SET etiqueta = :etiqueta" +
                 "where id = :id;";
         try (Connection con = sql2o.open()) {
             con.createQuery(updateSql)
-                    .addParameter("articulo", etiqueta.getArticulo())
                     .addParameter("etiqueta", etiqueta.getEtiqueta())
                     .addParameter("id", etiqueta.getId())
                     .executeUpdate();
