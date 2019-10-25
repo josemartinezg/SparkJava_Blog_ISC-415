@@ -28,10 +28,16 @@ public class Main {
         ArticuloDao articuloDao = new ArticuloDao();
         ComentarioDao comentarioDao = new ComentarioDao();
         EtiquetaDao etiquetaDao = new EtiquetaDao();
-
+//        etiquetaDao.save(new Etiqueta("Desarrollo Movil Nativo"));
+//        articuloDao.save(new Articulo("This is new...", "As simple as this not cost effective and the learning curve is awful.",
+//               "chema", new Date(), 3));
+//        articuloDao.save(new Articulo("This is new...", "As simple as this not cost effective and the learning curve is awful.",
+//                "chema", new Date(), 3));
+//        articuloDao.save(new Articulo("This is new...", "As simple as this not cost effective and the learning curve is awful.",
+//                "chema", new Date(), 3));
         //indicando los recursos publicos.
         //staticFiles.location("/META-INF/resources"); //para utilizar los WebJars.
-        staticFiles.location("publico");
+        staticFiles.location("/publico");
         //staticFiles.location("");
         Configuration configuration = new Configuration(Configuration.getVersion());
         configuration.setClassForTemplateLoading(Main.class, "/publico/templates");
@@ -60,6 +66,10 @@ public class Main {
         Spark.get("/home", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
+            List<Articulo> articulos = articuloDao.getAll();
+            UsuarioDao userDao = new UsuarioDao();
+            attributes.put("user", userDao.get("chema").get(0).getNombre());
+            attributes.put("articulos", articulos);
             Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "home.ftl");
@@ -73,26 +83,27 @@ public class Main {
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
 
-        Spark.get("/articulo:id", (request, response) -> {
+        Spark.get("/articulo/:id", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
-            String idArticulo = request.params("id_articulo");
+            String idArticulo = request.params("id");
             Articulo articulo = articuloDao.get(idArticulo).get(0);
             attributes.put("articulo", articulo);
             Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
-
-        Spark.get("/autor:id", (request, response) -> {
+        //Obtener al usuario específico.
+        Spark.get("/author/:id", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
-            String username = request.params("username");
-            Usuario author = usuarioDao.get(username).get(0);
+            //String username = request.params("username");
+            String username2 = request.params("id");
+            Usuario author = usuarioDao.get(username2).get(0);
             attributes.put("author", author);
             Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "author.ftl");
         }, freeMarkerEngine);
-
+    //Mostrar el usuario que inició la sesión
         Spark.get("/author", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");

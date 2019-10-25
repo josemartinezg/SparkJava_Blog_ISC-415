@@ -27,6 +27,7 @@ public class Articulo {
         this.cuerpo = cuerpo;
         this.autor = autor;
         this.fecha = fecha;
+        this.etiqueta = etiqueta;
     }
     public Articulo(long id, String titulo, String cuerpo, String autor, Date fecha, int etiqueta) {
         this.id = id;
@@ -34,6 +35,7 @@ public class Articulo {
         this.cuerpo = cuerpo;
         this.autor = autor;
         this.fecha = fecha;
+        this.etiqueta = etiqueta;
     }
 
     public long getId() {

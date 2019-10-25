@@ -32,7 +32,7 @@ public class ArticuloDao implements Dao<Articulo> {
                 "    REFERENCES usuario (username);" +
                 "ALTER TABLE articulo\n" +
                 "    ADD FOREIGN KEY (etiqueta) \n" +
-                "    REFERENCES articulo (id);";;
+                "    REFERENCES etiqueta (id);";
         try(Connection con = sql2o.open()){
             con.createQuery(sql).executeUpdate();
         }
@@ -64,11 +64,11 @@ public class ArticuloDao implements Dao<Articulo> {
 
         try (Connection con = sql2o.open()) {
             con.createQuery(insertSql)
-                    .addParameter("etiqueta", articulo.getEtiqueta())
                     .addParameter("titulo", articulo.getTitulo())
                     .addParameter("cuerpo", articulo.getCuerpo())
                     .addParameter("autor", articulo.getAutor())
                     .addParameter("fecha", articulo.getFecha())
+                    .addParameter("etiqueta", articulo.getEtiqueta())
                     .executeUpdate();
         }
         //misUsuarios.add(usuario);
