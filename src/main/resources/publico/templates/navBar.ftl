@@ -33,7 +33,23 @@
                 <a href="/login" class="float-right btn btn-outline-light">Sign up/Login</a>
             </#if>
             <#if usuario != "">
-                <a href="/hacerLogout" class="float-right btn btn-outline-danger">Log out</a>
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        ${usuario.username}
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <#if usuario.administrador>
+                            <a class="dropdown-item" href="#">Usuarios</a>
+                        </#if>
+                        <#if usuario.author>
+                            <a class="dropdown-item" href="#">Etiquetas</a>
+                        </#if>
+                        <div class="dropdown-divider">
+                            <a href="/hacerLogout" class="dropdown-item">Log out</a>
+                        </div>
+                    </div>
+                </div>
             </#if>
         </div>
     </div>
