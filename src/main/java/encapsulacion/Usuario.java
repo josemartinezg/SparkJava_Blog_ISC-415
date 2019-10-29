@@ -66,7 +66,7 @@ public class Usuario {
                 ", nombre='" + nombre + '\'' +
                 ", password=" + password +
                 ", administrator=" + administrator +
-                ", autohor=" + author +
+                ", author=" + author +
                 '}';
     }
 }

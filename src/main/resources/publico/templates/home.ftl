@@ -42,7 +42,6 @@
             <h2><span>All Stories</span></h2>
         </div>
         <div class="card-columns listrecent">
-
             <!-- begin post -->
             <div class="card">
                 <a href="/post">

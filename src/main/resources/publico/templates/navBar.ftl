@@ -29,28 +29,38 @@
             </form>
             <!-- End Search -->
             <!-- User info -->
-            <#if usuario == "">
-                <a href="/login" class="float-right btn btn-outline-light">Sign up/Login</a>
-            </#if>
-            <#if usuario != "">
-                <div class="dropdown">
-                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        ${usuario.username}
-                    </a>
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <#if usuario.administrador>
-                            <a class="dropdown-item" href="#">Usuarios</a>
-                        </#if>
-                        <#if usuario.author>
-                            <a class="dropdown-item" href="#">Etiquetas</a>
-                        </#if>
-                        <div class="dropdown-divider">
-                            <a href="/hacerLogout" class="dropdown-item">Log out</a>
+            <div class="btn-group">
+                <#if usuario == "">
+                    <a href="/login" class="float-right btn btn-outline-light">Sign in/Sign up</a>
+                </#if>
+                <#if usuario != "">
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ${usuario.username}
+                        </a>
+                        <div class="dropdown-menu">
+                            <#if usuario.author || usuario.administrator>
+                                <h6 class="dropdown-header">Authors</h6>
+                                <a class="dropdown-item btn" href="#">Tags</a>
+                                <div class="dropdown-divider"></div>
+                            </#if>
+                            <#if usuario.administrator>
+                                <h6 class="dropdown-header">Administrators</h6>
+                                <a class="dropdown-item btn" href="#">Users</a>
+                                <div class="dropdown-divider"></div>
+                            </#if>
+                            <a class="dropdown-item btn" href="/hacerLogout">Log out</a>
                         </div>
                     </div>
-                </div>
-            </#if>
+                    <div class="btn-group">
+                        <#if usuario.author || usuario.administrator>
+                            <div class="btn-group">
+                                <a class="topbtn btn-primary" href="/crearArticulo"><i class="fa fa-plus"></i></a>
+                            </div>
+                        </#if>
+                    </div>
+                </#if>
+            </div>
         </div>
     </div>
 </nav>
