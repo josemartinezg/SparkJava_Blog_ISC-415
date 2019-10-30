@@ -14,6 +14,7 @@ public class Etiqueta {
     private int articulo;
     private String etiqueta;
 
+
     public Etiqueta() {}
     public Etiqueta ( String etiqueta) {
         this.etiqueta = etiqueta;

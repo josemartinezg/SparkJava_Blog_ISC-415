@@ -12,7 +12,8 @@ public class Usuario {
 
     public Usuario() {}
 
-    public Usuario(String username, String nombre, String password, boolean administrator, boolean author) {
+    public Usuario(String username, String nombre, String password,
+                   boolean administrator, boolean author) {
         this.username = username;
         this.nombre = nombre;
         this.password = password;

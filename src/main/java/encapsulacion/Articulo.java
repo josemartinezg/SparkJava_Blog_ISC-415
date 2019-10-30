@@ -1,41 +1,44 @@
 package encapsulacion;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 public class Articulo {
     private long id;
     private String titulo;
     private String cuerpo;
     private String autor;
-    private int etiqueta;
     private Date fecha;
+    private ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
+    private ArrayList<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
+    private int etiquetaId;
 
-    public int getEtiqueta() {
-        return etiqueta;
+
+    public int getEtiquetaId() {
+        return etiquetaId;
     }
 
-    public void setEtiqueta(int etiqueta) {
-        this.etiqueta = etiqueta;
+    public void setEtiquetaId(int etiquetaId) {
+        this.etiquetaId = etiquetaId;
     }
 
 
     public Articulo() {
     }
-    public Articulo(String titulo, String cuerpo, String autor, Date fecha, int etiqueta) {
+    public Articulo(String titulo, String cuerpo, String autor, Date fecha, int etiquetaId) {
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
         this.fecha = fecha;
-        this.etiqueta = etiqueta;
+        this.etiquetaId = etiquetaId;
     }
-    public Articulo(long id, String titulo, String cuerpo, String autor, Date fecha, int etiqueta) {
+    public Articulo(long id, String titulo, String cuerpo, String autor, Date fecha, int etiquetaId) {
         this.id = id;
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
         this.fecha = fecha;
-        this.etiqueta = etiqueta;
+        this.etiquetaId = etiquetaId;
     }
 
     public long getId() {
@@ -77,25 +80,25 @@ public class Articulo {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-//
-//    public ArrayList<Comentario> getListaComentarios() {
-//        return listaComentarios;
-//    }
-//
-//    public void setListaComentarios(ArrayList<Comentario> listaComentarios) {
-//        this.listaComentarios = listaComentarios;
-//    }
-//
-//    public ArrayList<Etiqueta> getListaEtiquetas() {
-//        return listaEtiquetas;
-//    }
-//
-//    public void setListaEtiquetas(ArrayList<Etiqueta> listaEtiquetas) {
-//        this.listaEtiquetas = listaEtiquetas;
-//    }
 
-//    private ArrayList<Comentario> listaComentarios;
-//    private ArrayList<Etiqueta> listaEtiquetas;
+    public ArrayList<Comentario> getListaComentarios() {
+        return listaComentarios;
+    }
+
+    public void setListaComentarios(ArrayList<Comentario> listaComentarios) {
+        this.listaComentarios = listaComentarios;
+    }
+
+    public ArrayList<Etiqueta> getListaEtiquetas() {
+        return listaEtiquetas;
+    }
+
+    public void setListaEtiquetas(ArrayList<Etiqueta> listaEtiquetas) {
+        this.listaEtiquetas = listaEtiquetas;
+    }
+
+    private ArrayList<Comentario> listaComentarios;
+    private ArrayList<Etiqueta> listaEtiquetas;
 
 
     public Date getFehca() {

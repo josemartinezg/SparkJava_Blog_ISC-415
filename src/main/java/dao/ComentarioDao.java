@@ -13,7 +13,7 @@ public class ComentarioDao implements  Dao<Comentario> {
     private List<Comentario> misComentarios = new ArrayList<>();
     public ComentarioDao() {
         //subiendola en modo Embedded
-        this.sql2o = new Sql2o("jdbc:h2:~/demosql2o2", "sa", "");
+        this.sql2o = new Sql2o("jdbc:h2:~/demojdbc", "sa", "");
         createTable();
         //cargaDemo();
     }
