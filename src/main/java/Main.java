@@ -39,12 +39,6 @@ public class Main {
 
         Usuario admin = new Usuario("admin", "Jose", "admin", true, true);
 
-        before("*", (request, response) -> {
-            Session session = request.session(true);
-            if(session.attribute("usuario") == null)
-                session.attribute("usuario", "");
-        });
-
         Spark.get("/login", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
@@ -71,6 +65,14 @@ public class Main {
             Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "post.ftl");
+        }, freeMarkerEngine);
+
+        Spark.get("/crearArticulo", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("titulo", "Login");
+            Session session = request.session(true);
+            attributes.put("usuario", session.attribute("usuario"));
+            return new ModelAndView(attributes, "crearArticulo.ftl");
         }, freeMarkerEngine);
 
         Spark.get("/articulo:id", (request, response) -> {
@@ -129,14 +131,10 @@ public class Main {
             boolean isauthor = false;
             String auxIsAdmin = request.queryParams("isadmin");
             String auxIsAuthor = request.queryParams("isauthor");
-            if(auxIsAdmin == null){
-                isadmin = false;
-            }else if(auxIsAdmin.equals("on")){
+            if(auxIsAdmin.equals("on")){
                 isadmin = true;
             }
-            if(auxIsAuthor == null){
-                isauthor = false;
-            }else if(auxIsAuthor.equals("on")){
+            if(auxIsAuthor.equals("on")){
                 isauthor = true;
             }
             System.out.println(request.queryParams("isauthor"));
@@ -153,7 +151,7 @@ public class Main {
             //creando cookie en para un minuto
             Session session = request.session();
             session.invalidate();
-            response.redirect("/login");
+            response.redirect("/home");
             return "";
         });
 
@@ -161,6 +159,20 @@ public class Main {
             response.redirect("/home");
             return "";
         });
+
+        //Filtros
+        before("*", (request, response) -> {
+            Session session = request.session(true);
+            if(session.attribute("usuario") == null)
+                session.attribute("usuario", "");
+        });
+
+//        before("/crearArticulo",(request, response) -> {
+//            Usuario usuario = request.session().attribute("usuario");
+//            if(usuario==null){
+//                response.redirect("/login");
+//            }
+//        });
     }
 }
 //        userDao = new UsuarioDao();
