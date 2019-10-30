@@ -14,14 +14,14 @@ public class Etiqueta {
     private int articulo;
     private String etiqueta;
 
+
     public Etiqueta() {}
-    public Etiqueta (int articulo, String etiqueta) {
-        this.articulo = articulo;
+    public Etiqueta ( String etiqueta) {
         this.etiqueta = etiqueta;
     }
-    public Etiqueta(long id, int articulo, String etiqueta) {
+    public Etiqueta(long id, String etiqueta) {
         this.id = id;
-        this.articulo = articulo;
+
         this.etiqueta = etiqueta;
     }
 

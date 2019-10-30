@@ -1,7 +1,6 @@
 package dao;
 
 import encapsulacion.Articulo;
-import encapsulacion.Usuario;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -13,7 +12,7 @@ public class ArticuloDao implements Dao<Articulo> {
     private List<Articulo> misArticulos = new ArrayList<>();
     public ArticuloDao(){
         //subiendola en modo Embedded
-        this.sql2o = new Sql2o("jdbc:h2:~/demosql2o2", "sa", "");
+        this.sql2o = new Sql2o("jdbc:h2:~/demojdbc", "sa", "");
         createTable();
         //cargaDemo();
     }
@@ -32,7 +31,7 @@ public class ArticuloDao implements Dao<Articulo> {
                 "    REFERENCES usuario (username);" +
                 "ALTER TABLE articulo\n" +
                 "    ADD FOREIGN KEY (etiqueta) \n" +
-                "    REFERENCES articulo (id);";;
+                "    REFERENCES etiqueta (id);";
         try(Connection con = sql2o.open()){
             con.createQuery(sql).executeUpdate();
         }
@@ -64,11 +63,11 @@ public class ArticuloDao implements Dao<Articulo> {
 
         try (Connection con = sql2o.open()) {
             con.createQuery(insertSql)
-                    .addParameter("etiqueta", articulo.getEtiqueta())
                     .addParameter("titulo", articulo.getTitulo())
                     .addParameter("cuerpo", articulo.getCuerpo())
                     .addParameter("autor", articulo.getAutor())
                     .addParameter("fecha", articulo.getFecha())
+                    .addParameter("etiqueta", articulo.getEtiquetaId())
                     .executeUpdate();
         }
         //misUsuarios.add(usuario);
@@ -80,7 +79,7 @@ public class ArticuloDao implements Dao<Articulo> {
                 "fecha = :fecha, etiqueta = :etiqueta where id = :id";
         try (Connection con = sql2o.open()) {
             con.createQuery(updateSql)
-                    .addParameter("etiqueta", articulo.getEtiqueta())
+                    .addParameter("etiqueta", articulo.getEtiquetaId())
                     .addParameter("titulo", articulo.getTitulo())
                     .addParameter("cuerpo", articulo.getCuerpo())
                     .addParameter("autor", articulo.getAutor())

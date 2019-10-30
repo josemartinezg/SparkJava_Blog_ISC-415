@@ -3,8 +3,15 @@ import encapsulacion.Articulo;
 import encapsulacion.Comentario;
 import encapsulacion.Etiqueta;
 import encapsulacion.Usuario;
-import java.util.Date;
+
+import java.sql.SQLException;
+import java.sql.Date;
 import encapsulacion.Usuario;
+import org.h2.engine.User;
+import servicios.ArticuloServices;
+import servicios.DataBaseServices;
+import servicios.InicioServices;
+import servicios.UsuarioServices;
 import spark.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,21 +30,27 @@ import spark.Session;
 public class Main {
     private static Dao userDao;
 
-    public static void main(String[] args) {
-        UsuarioDao usuarioDao = new UsuarioDao();
-        ArticuloDao articuloDao = new ArticuloDao();
-        ComentarioDao comentarioDao = new ComentarioDao();
-        EtiquetaDao etiquetaDao = new EtiquetaDao();
+    public static void main(String[] args) throws SQLException {
+        InicioServices.iniciarDb();
+        DataBaseServices.getInstance().testConexion();
+        InicioServices.crearTablas();
 
-        //indicando los recursos publicos.
+        ArticuloServices articuloServices = new ArticuloServices();
+        UsuarioServices usuarioServices = new UsuarioServices();
+
         //staticFiles.location("/META-INF/resources"); //para utilizar los WebJars.
-        staticFiles.location("publico");
+        staticFiles.location("/publico");
         //staticFiles.location("");
+
         Configuration configuration = new Configuration(Configuration.getVersion());
         configuration.setClassForTemplateLoading(Main.class, "/publico/templates");
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine(configuration);
 
-        Usuario admin = new Usuario("admin", "Jose", "admin", true, true);
+        before("*", (request, response) -> {
+            Session session = request.session(true);
+            if(session.attribute("usuario") == null)
+                session.attribute("usuario", "");
+        });
 
         Spark.get("/login", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
@@ -54,6 +67,8 @@ public class Main {
         Spark.get("/home", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
+            List<Articulo> articulos = articuloServices.selectArticulos();
+            attributes.put("articulos", articulos);
             Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "home.ftl");
@@ -77,24 +92,24 @@ public class Main {
 
         Spark.get("/articulo:id", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
-            String idArticulo = request.params("id_articulo");
-            Articulo articulo = articuloDao.get(idArticulo).get(0);
+            String idArticulo = request.params("id");
+            Articulo articulo = articuloServices.getArticulo(Integer.parseInt(idArticulo));
             attributes.put("articulo", articulo);
             Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
-
-        Spark.get("/autor:id", (request, response) -> {
+        //Obtener al usuario específico.
+        Spark.get("/author/:id", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
-            String username = request.params("username");
-            Usuario author = usuarioDao.get(username).get(0);
+            String username = request.params("id");
+            Usuario author = usuarioServices.getUsuario(username);
             attributes.put("author", author);
             Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "author.ftl");
         }, freeMarkerEngine);
-
+    //Mostrar el usuario que inició la sesión
         Spark.get("/author", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
@@ -105,7 +120,7 @@ public class Main {
 
         Spark.post("/hacerLogin/", (request, response) -> {
             Session session = request.session(true);
-            List<Usuario> usuarios = usuarioDao.getAll();
+            List<Usuario> usuarios = usuarioServices.getAllUsuarios();
             Usuario usuario = null;
             String username = request.queryParams("username");
             String password = request.queryParams("password");
@@ -139,7 +154,7 @@ public class Main {
             }
             System.out.println(request.queryParams("isauthor"));
             Usuario usuario = new Usuario(username, nombre, password, isadmin, isauthor);
-            usuarioDao.save(usuario);
+            usuarioServices.crearUsuario(usuario);
 
             //redireccionado a la otra URL.
             response.redirect("/login");
@@ -175,72 +190,4 @@ public class Main {
 //        });
     }
 }
-//        userDao = new UsuarioDao();
-//        System.out.println("Prueba Dao");
-//        UsuarioDao usuarioDao = new UsuarioDao();
-//        List<Usuario> allEstudiante = usuarioDao.getAll();
-//        for(Usuario estudiante : allEstudiante){
-//            System.out.printf("Username: %s - Nombre: %s\n",
-//                    estudiante.getUsername(), estudiante.getNombre());
 
-//        usuarioDao.save(new Usuario("jtmlmass", "Tomas", "ljf4656d", false, true));
-//        System.out.println(usuarioDao.getAll());
-//        Usuario user= usuarioDao.get("chema").get(0);
-//        System.out.println(user);
-
-        //Update works
-//        userDao.update(new Usuario(selectedUser.getUsername(), selectedUser.getNombre(), "plepla",
-//                selectedUser.isAdministrator(),
-//                true));
-//        System.out.println(usuarioDao.getAll());
-//        userDao.delete(selectedUser);
-//        userDao.delete(selectedUser);
-//        System.out.println(usuarioDao.getAll());
-
-        /* Articulo Works
-         */
-
-//        articuloDao.save(new Articulo("This is new...", "As simple as this not cost effective and the learning curve is awful.",
-//                usuarioDao.get("chema").get(0).getUsername(), new Date()));
-//        articuloDao.update(new Articulo(6, "Flutter is good, but not there yet",
-//                "The documentation is stupid",
-//                usuarioDao.get("chema").get(0).getUsername(), new Date()));
-//        System.out.println(articuloDao.getAll());
-//        System.out.println(articuloDao.get("6"));
-//Funciona to... respira tu dema....
-
-        /* Comentario Works
-         */
-
-//        comentarioDao.save(new Comentario("This is bullshit, Flutter rocks.", 6, "jtmlmass"));
-//        comentarioDao.save(new Comentario("Agreed. Flutter rocks", 6, "chema"));
-//        comentarioDao.update(new Comentario(1, "Pretty fucking horrid this flutter thing is!.", 6, "jtmlmass"));
-//        System.out.println(articuloDao.getAll());
-//        System.out.println(articuloDao.get("1"));
-
-//        etiquetaDao.save(new Etiqueta(1, "Desarrollo Movil Nativo"));
-//        etiquetaDao.save(new Etiqueta(3, "Opinion"));
-//        /*etiquetaDao.update(new Etiqueta(1, "Desarrollo Movil Hibrido"));*/
-//        System.out.println(etiquetaDao.getAll());
-//        System.out.println(etiquetaDao.get("1"));
-
-
-
-
-//        Usuario user1 = getUser(0);
-//        System.out.println(user1);
-//        userDao.update(user1, new String[]{"Jake", "jake@domain.com"});
-
-    //Usuario user2 = getUser(1);
-    //userDao.delete(user2);
-    //userDao.save(new Usuario("Julie", "julie@domain.com"));
-
-        // userDao.getAll().forEach(user -> System.out.println(user.getName()));
-
-   /* private static Usuario getUser(String id) {
-        List<Usuario> user = userDao.get(id);
-
-        return user.orElseGet(
-                () ->new Usuario("non-existing user", "no-email", "thisPass",
-                        false, false));
-    }*/
