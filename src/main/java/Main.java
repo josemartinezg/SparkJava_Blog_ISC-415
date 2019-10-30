@@ -39,12 +39,6 @@ public class Main {
 
         Usuario admin = new Usuario("admin", "Jose", "admin", true, true);
 
-        before("*", (request, response) -> {
-            Session session = request.session(true);
-            if(session.attribute("usuario") == null)
-                session.attribute("usuario", "");
-        });
-
         Spark.get("/login", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
@@ -165,6 +159,20 @@ public class Main {
             response.redirect("/home");
             return "";
         });
+
+        //Filtros
+        before("*", (request, response) -> {
+            Session session = request.session(true);
+            if(session.attribute("usuario") == null)
+                session.attribute("usuario", "");
+        });
+
+//        before("/crearArticulo",(request, response) -> {
+//            Usuario usuario = request.session().attribute("usuario");
+//            if(usuario==null){
+//                response.redirect("/login");
+//            }
+//        });
     }
 }
 //        userDao = new UsuarioDao();

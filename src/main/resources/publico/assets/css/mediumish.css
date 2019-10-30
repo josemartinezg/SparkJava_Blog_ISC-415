@@ -26,6 +26,18 @@ License: https://www.wowthemes.net/freebies-license/
 	background-color: #555; /* Add a dark-grey background on hover */
 }
 
+.btn-primary {
+	color: #fff;
+	background-color: #28a745;
+	border-color: #28a745;
+}
+
+.btn-primary:hover {
+	color: #fff;
+	background-color: #248d3d;
+	border-color: #154322;
+}
+
 body {
 	padding-top:5rem;
 }
