@@ -16,9 +16,12 @@
     <link href="assets/css/mediumish.css" rel="stylesheet">
     <!-- Textarea -->
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.11/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.11/js/select2.min.js"></script>
     <script>tinymce.init(
         {
             selector:'textarea#default',
+            height: 350,
             menubar: false // removes the menubar
         });
     </script>
@@ -46,6 +49,15 @@
                         <textarea id="default" name="articulo">Write your Post here!</textarea>
                     </div>
                 </div>
+                <div class="row">
+                    <label for="etiquetas">Tags</label>
+                    <select id="etiquetas" class="form-control" multiple="multiple">
+                        <option selected="selected">orange</option>
+                        <option>white</option>
+                        <option selected="selected">purple</option>
+                    </select>
+
+                </div>
                 <br/>
                 <div class="row align-items-center">
                     <div class="col">
@@ -57,7 +69,7 @@
         </div>
     </div>
 </div>
-<!-- Begin Footer
+<!-- Begin Footerx
 ================================================== -->
 <div class="container">
     <div class="footer">
