@@ -35,6 +35,7 @@ public class Main {
         InicioServices.iniciarDb();
         DataBaseServices.getInstance().testConexion();
         InicioServices.crearTablas();
+        InicioServices.crearAdministrador();
 
         ArticuloServices articuloServices = new ArticuloServices();
         UsuarioServices usuarioServices = new UsuarioServices();

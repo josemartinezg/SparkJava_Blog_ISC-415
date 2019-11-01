@@ -1,5 +1,6 @@
 package servicios;
 
+import encapsulacion.Usuario;
 import org.h2.tools.Server;
 
 import java.sql.Connection;
@@ -14,6 +15,20 @@ public class InicioServices {
 
     public static void stopDb() throws SQLException {
         Server.shutdownTcpServer("tcp://localhost:9092", "", true, true);
+    }
+
+    public static void crearAdministrador() {
+        final UsuarioServices usuarioServices = new UsuarioServices();
+        if(usuarioServices.getUsuario("administrador") == null){
+            Usuario administrador = new Usuario(
+                    "administrador",
+                    "administrador",
+                    "administrador",
+                    true,
+                    false
+            );
+            usuarioServices.crearUsuario(administrador);
+        }
     }
 
     public static void crearTablas() throws SQLException {
