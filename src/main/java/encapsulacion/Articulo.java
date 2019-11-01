@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.sql.Date;
 
 public class Articulo {
+
+
     private long id;
     private String titulo;
     private String cuerpo;
     private String autor;
     private Date fecha;
-    private ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
-    private ArrayList<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
+    private ArrayList<Comentario> listaComentarios;
+    private ArrayList<Etiqueta> listaEtiquetas;
     private int etiquetaId;
 
 
@@ -22,15 +24,22 @@ public class Articulo {
         this.etiquetaId = etiquetaId;
     }
 
-
-    public Articulo() {
-    }
-    public Articulo(String titulo, String cuerpo, String autor, Date fecha, int etiquetaId) {
+    public Articulo(String titulo, String cuerpo, String autor, Date fecha, ArrayList<Comentario> listaComentarios, ArrayList<Etiqueta> listaEtiquetas) {
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
         this.fecha = fecha;
-        this.etiquetaId = etiquetaId;
+        this.listaComentarios = listaComentarios;
+        this.listaEtiquetas = listaEtiquetas;
+    }
+
+    public Articulo() {
+    }
+    public Articulo(String titulo, String cuerpo, String autor, Date fecha) {
+        this.titulo = titulo;
+        this.cuerpo = cuerpo;
+        this.autor = autor;
+        this.fecha = fecha;
     }
     public Articulo(long id, String titulo, String cuerpo, String autor, Date fecha, int etiquetaId) {
         this.id = id;
@@ -97,8 +106,7 @@ public class Articulo {
         this.listaEtiquetas = listaEtiquetas;
     }
 
-    private ArrayList<Comentario> listaComentarios;
-    private ArrayList<Etiqueta> listaEtiquetas;
+
 
 
     public Date getFehca() {
@@ -111,15 +119,16 @@ public class Articulo {
 
     @Override
     public String toString() {
-        return "Articulo{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", cuerpo='" + cuerpo + '\'' +
-                ", autor=" + autor +
-                ", fehca=" + fecha +
-//                ", listaComentarios=" + listaComentarios +
-//                ", listaEtiquetas=" + listaEtiquetas +
-
-                '}';
+        return Long.toString(id);
+//        return "Articulo{" +
+//                "id=" + id +
+//                ", titulo='" + titulo + '\'' +
+//                ", cuerpo='" + cuerpo + '\'' +
+//                ", autor=" + autor +
+//                ", fehca=" + fecha +
+////                ", listaComentarios=" + listaComentarios +
+////                ", listaEtiquetas=" + listaEtiquetas +
+//
+//                '}';
     }
 }

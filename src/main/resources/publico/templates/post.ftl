@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="assets/img/favicon.ico">
+    <link rel="icon" href="../assets/img/favicon.ico">
     <title>Mediumish - A Medium style template by WowThemes.net</title>
     <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <!-- Fonts -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="assets/css/mediumish.css" rel="stylesheet">
+    <link href="../assets/css/mediumish.css" rel="stylesheet">
+    <link href="vendor/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="vendor/select2/dist/js/select2.min.js"></script>
 </head>
 <body>
 
@@ -73,7 +75,8 @@
                         <a href="author.html"><img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal"></a>
                     </div>
                     <div class="col-md-10">
-                        <a class="link-dark" href="author.html">Chemax</a><a href="#" class="btn follow">Follow</a>
+                        <!--SI EXPLOTA ES PQ EL USUARIO NO SE HA LOGGED IN-->
+                        <a class="link-dark" href="author.html">${articulo.autor}</a><a href="#" class="btn follow">Follow</a>
                         <span class="author-description">Founder of WowThemes.net and creator of <b>"Mediumish"</b> theme that you're currently previewing. Developing professional premium themes, templates, plugins, scripts since 2012.</span>
                         <span class="post-date">${articulo.fecha}</span><span class="dot"></span><span class="post-read">6 min read</span>
                     </div>
@@ -83,10 +86,6 @@
                 <h1 class="posttitle">${articulo.titulo}</h1>
 
             </div>
-
-            <!-- Begin Featured Image -->
-            <img class="featured-image img-fluid" src="assets/img/demopic/10.jpg" alt="">
-            <!-- End Featured Image -->
 
             <!-- Begin Post Content -->
             <div class="article-post">
@@ -99,10 +98,10 @@
             <!-- Begin Tags -->
             <div class="after-post-tags">
                 <ul class="tags">
-                    <li><a href="#">Design</a></li>
-                    <li><a href="#">Growth Mindset</a></li>
-                    <li><a href="#">Productivity</a></li>
-                    <li><a href="#">Personal Growth</a></li>
+                    <#list articulo.listaEtiquetas as art>
+                    <li><a href="#">${art.etiqueta}</a></li>
+                    </#list>
+                    <li><a href="#">EmptyTag</a></li>
                 </ul>
             </div>
             <!-- End Tags -->
@@ -113,113 +112,6 @@
     </div>
 </div>
 <!-- End Article
-================================================== -->
-
-<div class="hideshare"></div>
-
-<!-- Begin Related
-================================================== -->
-<div class="graybg">
-    <div class="container">
-        <div class="row listrecent listrelated">
-
-            <!-- begin post -->
-            <div class="col-md-4">
-                <div class="card">
-                    <a href="post.html">
-                        <img class="img-fluid img-thumb" src="assets/img/demopic/9.jpg" alt="">
-                    </a>
-                    <div class="card-block">
-                        <h2 class="card-title"><a href="post.html">Best recreational places to visit on a holiday</a></h2>
-                        <div class="metafooter">
-                            <div class="wrapfooter">
-								<span class="meta-footer-thumb">
-								<a href="author.html"><img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal"></a>
-								</span>
-                                <span class="author-meta">
-								<span class="post-name"><a href="author.html">Sal</a></span><br/>
-								<span class="post-date">22 July 2017</span><span class="dot"></span><span class="post-read">6 min read</span>
-								</span>
-                                <span class="post-read-more"><a href="post.html" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end post -->
-
-            <!-- begin post -->
-            <div class="col-md-4">
-                <div class="card">
-                    <a href="post.html">
-                        <img class="img-fluid img-thumb" src="assets/img/demopic/8.jpg" alt="">
-                    </a>
-                    <div class="card-block">
-                        <h2 class="card-title"><a href="post.html">How travelling can change your life</a></h2>
-                        <div class="metafooter">
-                            <div class="wrapfooter">
-								<span class="meta-footer-thumb">
-								<a href="author.html"><img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal"></a>
-								</span>
-                                <span class="author-meta">
-								<span class="post-name"><a href="author.html">Sal</a></span><br/>
-								<span class="post-date">22 July 2017</span><span class="dot"></span><span class="post-read">6 min read</span>
-								</span>
-                                <span class="post-read-more"><a href="post.html" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end post -->
-
-            <!-- begin post -->
-            <div class="col-md-4">
-                <div class="card">
-                    <a href="post.html">
-                        <img class="img-fluid img-thumb" src="assets/img/demopic/7.jpg" alt="">
-                    </a>
-                    <div class="card-block">
-                        <h2 class="card-title"><a href="post.html">Little red dress and a perfect summer</a></h2>
-                        <div class="metafooter">
-                            <div class="wrapfooter">
-								<span class="meta-footer-thumb">
-								<a href="author.html"><img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal"></a>
-								</span>
-                                <span class="author-meta">
-								<span class="post-name"><a href="author.html">Sal</a></span><br/>
-								<span class="post-date">22 July 2017</span><span class="dot"></span><span class="post-read">6 min read</span>
-								</span>
-                                <span class="post-read-more"><a href="post.html" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end post -->
-
-        </div>
-    </div>
-</div>
-<!-- End Related Posts
-================================================== -->
-
-<!-- Begin Twitter Timeline
-================================================== -->
-<div class="container margtop3rem">
-    <a class="twitter-grid" href="https://twitter.com/TwitterDev/timelines/539487832448843776">WowThemesNet Tweets</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</div>
-<!-- End Twitter Timeline
-================================================== -->
-
-<!-- Begin AlertBar
-================================================== -->
-<div class="alertbar">
-    <div class="container text-center">
-        <img src="assets/img/logo.png" alt=""> &nbsp; Never miss a <b>story</b> from us, get weekly updates in your inbox. <a href="#" class="btn subscribe">Get Updates</a>
-    </div>
-</div>
-<!-- End AlertBar
 ================================================== -->
 
 <!-- Begin Footer
@@ -242,10 +134,10 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="assets/js/jquery.min.js"></script>
+<script src="../assets/js/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
-<script src="assets/js/mediumish.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="../assets/js/mediumish.js"></script>
 </body>
 </html>

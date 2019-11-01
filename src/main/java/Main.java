@@ -4,6 +4,7 @@ import encapsulacion.Comentario;
 import encapsulacion.Etiqueta;
 import encapsulacion.Usuario;
 
+import java.sql.Array;
 import java.sql.SQLException;
 import java.sql.Date;
 import encapsulacion.Usuario;
@@ -38,6 +39,7 @@ public class Main {
         ArticuloServices articuloServices = new ArticuloServices();
         UsuarioServices usuarioServices = new UsuarioServices();
 
+
         //staticFiles.location("/META-INF/resources"); //para utilizar los WebJars.
         staticFiles.location("/publico");
         //staticFiles.location("");
@@ -45,6 +47,9 @@ public class Main {
         Configuration configuration = new Configuration(Configuration.getVersion());
         configuration.setClassForTemplateLoading(Main.class, "/publico/templates");
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine(configuration);
+
+        Etiqueta auxEtiqueta = new Etiqueta();
+
 
         before("*", (request, response) -> {
             Session session = request.session(true);
@@ -78,7 +83,7 @@ public class Main {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
             Session session = request.session(true);
-            attributes.put("usuario", session.attribute("usuario"));
+            attributes.put("usuario", session.attribute("usuario").toString());
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
 
@@ -90,19 +95,60 @@ public class Main {
             return new ModelAndView(attributes, "crearArticulo.ftl");
         }, freeMarkerEngine);
 
-        Spark.get("/articulo:id", (request, response) -> {
+        Spark.post("/postArticulo/", (request, response) -> {
+            Session session = request.session(true);
+            String titulo = request.queryParams("titulo");
+            String cuerpo = request.queryParams("cuerpo");
+            String autor = session.attribute("usuario").toString();
+            Date fecha = new Date(System.currentTimeMillis());
+            Articulo articulo = new Articulo(titulo, cuerpo, autor, fecha);
+            int idArt = articuloServices.insertArticulo(articulo);
+            articuloServices.insertArticulo(articulo);
+            String etiquetas = request.queryParams("etiquetas");
+            String inputTags[] = etiquetas.split(",");
+            ArrayList<Etiqueta> auxList = new ArrayList<>();
+            for (String etiqueta: inputTags) {
+                Etiqueta etiquetaAux = new Etiqueta();
+                etiquetaAux.setEtiqueta(etiqueta);
+                etiquetaAux.setArticulo(idArt);
+                articuloServices.crearEtiqueta(etiquetaAux);
+                auxList.add(etiquetaAux);
+            }
+            articulo.setListaEtiquetas(auxList);
+            //misEstudiantes.add(estudiante);
             Map<String, Object> attributes = new HashMap<>();
-            String idArticulo = request.params("id");
-            Articulo articulo = articuloServices.getArticulo(Integer.parseInt(idArticulo));
+            attributes.put("titulo", "New Article");
+            System.out.println(articulo.getListaEtiquetas().toString());
             attributes.put("articulo", articulo);
+            response.redirect("/home");
+            return null;
+        }, freeMarkerEngine);
+
+        Spark.get("/articulo/:id", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            int idArticulo = Integer.valueOf(request.params("id"));
+            Articulo articulo = articuloServices.getArticulo(idArticulo);
+            System.out.println(articulo);
+            ArrayList<Etiqueta> auxList = new ArrayList<>();
+            ArrayList<Etiqueta> misEtiquetas;
+            misEtiquetas = articuloServices.getAllEtiquetas();
+            for (Etiqueta tag : misEtiquetas){
+                if (tag.getArticulo() == idArticulo){
+                    auxList.add(tag);
+                }
+            }
+            articulo.setListaEtiquetas(auxList);
+            attributes.put("articulo", articulo);
+            System.out.println(articulo.getListaEtiquetas().toString());
             Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
+            System.out.println(articulo.getListaEtiquetas().toString());
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
         //Obtener al usuario específico.
-        Spark.get("/author/:id", (request, response) -> {
+        Spark.get("/author/:username", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
-            String username = request.params("id");
+            String username = request.params("username");
             Usuario author = usuarioServices.getUsuario(username);
             attributes.put("author", author);
             Session session = request.session(true);
@@ -114,6 +160,9 @@ public class Main {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
             Session session = request.session(true);
+            if(session.attribute("usuario") == null || session.attribute("usuario") == ""){
+                response.redirect("/login");
+            }
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "author.ftl");
         }, freeMarkerEngine);
