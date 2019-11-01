@@ -35,7 +35,7 @@ public class UsuarioServices {
     }
 
     public ArrayList<Usuario> getAllUsuarios() {
-        ArrayList<Usuario> misUsuarios = null;
+        ArrayList<Usuario> misUsuarios = new ArrayList<>();
         Connection connection = null;
 
         try {

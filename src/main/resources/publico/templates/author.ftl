@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="assets/img/favicon.ico">
+    <link rel="icon" href="../assets/img/favicon.ico">
     <title>Mediumish - A Medium style template by WowThemes.net</title>
     <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <!-- Fonts -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="assets/css/mediumish.css" rel="stylesheet">
+    <link href="../assets/css/mediumish.css" rel="stylesheet">
 </head>
 <body>
 
@@ -31,13 +31,11 @@
             <div class="mainheading">
                 <div class="row post-top-meta authorpage">
                     <div class="col-md-10 col-xs-12">
-                        <h1>Malditos</h1>
+                        <h1>${usuario.nombre}</h1>
+                        <h2>${usuario.username}</h2>
                         <span class="author-description"></span>
                         <div class="sociallinks"><a  target="_blank" href="https://www.facebook.com/wowthemesnet/"><i class="fa fa-facebook"></i></a> <span class="dot"></span> <a target="_blank" href="https://plus.google.com/s/wowthemesnet/top"><i class="fa fa-google-plus"></i></a></div>
                         <a target="_blank" href="https://twitter.com/wowthemesnet" class="btn follow">Follow</a>
-                    </div>
-                    <div class="col-md-2 col-xs-12">
-                        <img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal">
                     </div>
                 </div>
             </div>
@@ -139,9 +137,7 @@
 
 <!-- Begin Twitter Timeline
 ================================================== -->
-<div class="container margtop3rem">
-    <a class="twitter-grid" href="https://twitter.com/TwitterDev/timelines/539487832448843776">WowThemesNet Tweets</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</div>
+
 <!-- End Twitter Timeline
 ================================================== -->
 
@@ -164,9 +160,9 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="assets/js/jquery.min.js"></script>
+<script src="../assets/js/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>

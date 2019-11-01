@@ -40,15 +40,18 @@
                 <div class="row">
                     <div class="col form-group">
                         <label for="title">Title</label>
-                        <input id="title" name="title" class="form-control" placeholder="Title" type="text">
+                        <input id="titulo" name="titulo" class="form-control" placeholder="Title" type="text">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label for="default">Content</label>
-                        <textarea id="default" name="articulo">Write your Post here!</textarea>
+                        <textarea id="default" name="cuerpo">Write your Post here!</textarea>
                     </div>
                 </div>
+<#--    ESTE TEMA AMASTE               -->
+                <label for="etiquetas">Etiquetas</label>
+                <input name="etiquetas" class="form-control" placeholder="Enter your tags here, separated by commas..." type="text">
                 <div class="row">
                     <label for="etiquetas">Tags</label>
                     <select id="etiquetas" class="form-control" multiple="multiple">
@@ -56,6 +59,11 @@
                         <option>white</option>
                         <option selected="selected">purple</option>
                     </select>
+                    <script>
+                        $(".js-example-tags").select2({
+                            tags: true
+                        });
+                    </script>
 
                 </div>
                 <br/>
