@@ -9,6 +9,7 @@ public class Articulo {
     private long id;
     private String titulo;
     private String cuerpo;
+    private String cuerpoHome;
     private String autor;
     private Date fecha;
     private ArrayList<Comentario> listaComentarios;
@@ -106,7 +107,13 @@ public class Articulo {
         this.listaEtiquetas = listaEtiquetas;
     }
 
+    public String getCuerpoHome() {
+        return cuerpoHome;
+    }
 
+    public void setCuerpoHome(String cuerpoHome) {
+        this.cuerpoHome = cuerpoHome;
+    }
 
 
     public Date getFehca() {
@@ -115,6 +122,18 @@ public class Articulo {
 
     public void setFehca(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public String selectCuerpoHome(){
+        if (this.cuerpo.length() > 30){
+            this.cuerpoHome = this.cuerpo.substring(0, 30);
+            return this.cuerpoHome;
+        }else if (this.cuerpo.length() <= 30 && this.cuerpo.length() > 0){
+            this.cuerpoHome = this.cuerpo;
+            return this.cuerpoHome;
+        }else{
+            return "";
+        }
     }
 
     @Override

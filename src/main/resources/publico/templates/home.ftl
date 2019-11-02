@@ -60,7 +60,7 @@
                 </a>
                 <div class="card-block">
                     <h2 class="card-title"><a href="/articulo/${art.id}">${art.titulo}</a></h2>
-                    <h4 class="card-text">${art.cuerpo}</h4>
+                    <h4 class="card-text">${art.cuerpoHome}</h4>
                     <div class="metafooter">
                         <div class="wrapfooter">
 						<span class="meta-footer-thumb">
