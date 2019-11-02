@@ -18,7 +18,7 @@
                     <a class="nav-link" href="/post">Post</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/author">Author</a>
+                    <a class="nav-link" href="/author">My Profile</a>
                 </li>
             </ul>
             <!-- End Menu -->

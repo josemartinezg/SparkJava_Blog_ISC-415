@@ -62,12 +62,14 @@ public class Usuario {
     }
     @Override
     public String toString() {
-        return "Usuario{" +
-                "username='" + username + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", password=" + password +
-                ", administrator=" + administrator +
-                ", author=" + author +
-                '}';
+
+        return username;
+//        return "Usuario{" +
+//                "username='" + username + '\'' +
+//                ", nombre='" + nombre + '\'' +
+//                ", password=" + password +
+//                ", administrator=" + administrator +
+//                ", author=" + author +
+//                '}';
     }
 }

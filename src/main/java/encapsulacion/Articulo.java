@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.sql.Date;
 
 public class Articulo {
+
+
     private long id;
     private String titulo;
     private String cuerpo;
+    private String cuerpoHome;
     private String autor;
     private Date fecha;
-    private ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
-    private ArrayList<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
+    private ArrayList<Comentario> listaComentarios;
+    private ArrayList<Etiqueta> listaEtiquetas;
     private int etiquetaId;
 
 
@@ -22,15 +25,22 @@ public class Articulo {
         this.etiquetaId = etiquetaId;
     }
 
-
-    public Articulo() {
-    }
-    public Articulo(String titulo, String cuerpo, String autor, Date fecha, int etiquetaId) {
+    public Articulo(String titulo, String cuerpo, String autor, Date fecha, ArrayList<Comentario> listaComentarios, ArrayList<Etiqueta> listaEtiquetas) {
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
         this.fecha = fecha;
-        this.etiquetaId = etiquetaId;
+        this.listaComentarios = listaComentarios;
+        this.listaEtiquetas = listaEtiquetas;
+    }
+
+    public Articulo() {
+    }
+    public Articulo(String titulo, String cuerpo, String autor, Date fecha) {
+        this.titulo = titulo;
+        this.cuerpo = cuerpo;
+        this.autor = autor;
+        this.fecha = fecha;
     }
     public Articulo(long id, String titulo, String cuerpo, String autor, Date fecha, int etiquetaId) {
         this.id = id;
@@ -97,8 +107,13 @@ public class Articulo {
         this.listaEtiquetas = listaEtiquetas;
     }
 
-    private ArrayList<Comentario> listaComentarios;
-    private ArrayList<Etiqueta> listaEtiquetas;
+    public String getCuerpoHome() {
+        return cuerpoHome;
+    }
+
+    public void setCuerpoHome(String cuerpoHome) {
+        this.cuerpoHome = cuerpoHome;
+    }
 
 
     public Date getFehca() {
@@ -109,17 +124,30 @@ public class Articulo {
         this.fecha = fecha;
     }
 
+    public String selectCuerpoHome(){
+        if (this.cuerpo.length() > 30){
+            this.cuerpoHome = this.cuerpo.substring(0, 30);
+            return this.cuerpoHome;
+        }else if (this.cuerpo.length() <= 30 && this.cuerpo.length() > 0){
+            this.cuerpoHome = this.cuerpo;
+            return this.cuerpoHome;
+        }else{
+            return "";
+        }
+    }
+
     @Override
     public String toString() {
-        return "Articulo{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", cuerpo='" + cuerpo + '\'' +
-                ", autor=" + autor +
-                ", fehca=" + fecha +
-//                ", listaComentarios=" + listaComentarios +
-//                ", listaEtiquetas=" + listaEtiquetas +
-
-                '}';
+        return Long.toString(id);
+//        return "Articulo{" +
+//                "id=" + id +
+//                ", titulo='" + titulo + '\'' +
+//                ", cuerpo='" + cuerpo + '\'' +
+//                ", autor=" + autor +
+//                ", fehca=" + fecha +
+////                ", listaComentarios=" + listaComentarios +
+////                ", listaEtiquetas=" + listaEtiquetas +
+//
+//                '}';
     }
 }

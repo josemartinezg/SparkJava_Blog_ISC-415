@@ -32,8 +32,14 @@ public class ArticuloServices {
                 art.setId(rs.getInt("id"));
                 art.setTitulo(rs.getString("titulo"));
                 art.setCuerpo(rs.getString("cuerpo"));
+                //if (art.getCuerpo().length() <= 30 && art.getCuerpo().length() > 0)
                 art.setFecha(rs.getDate("fecha"));
                 art.setAutor(rs.getString("autor"));
+                if (art.getCuerpo().length() > 70){
+                    art.setCuerpoHome(art.getCuerpo().substring(0, 70));
+                }else {
+                    art.setCuerpoHome(art.getCuerpo());
+                }
                 System.out.println(art.getTitulo());
                 lista.add(art);
             }
@@ -70,6 +76,10 @@ public class ArticuloServices {
                 articulo.setFecha(rs.getDate("fecha"));
                 articulo.setAutor(rs.getString("autor"));
             }
+            String consultaSqlAtributo = "SELECT * FROM ETIQUETA WHERE ARTICULO = ?;";
+            PreparedStatement preparedStatementAtributo = con.prepareStatement(consultaSqlAtributo);
+            preparedStatementAtributo.setInt(1, codigoArticulo);
+            ResultSet rsArticulo = preparedStatementAtributo.executeQuery();
             ArrayList<Etiqueta> misEtiquetas = new ArrayList<>();
             while (rs.next()) {
                 Etiqueta tag = new Etiqueta();
@@ -256,11 +266,12 @@ public class ArticuloServices {
 
         Connection con = null;
         try {
-            String query = "INSERT INTO ETIQUETA(nombre_etiqueta) values(?)";
+            String query = "INSERT INTO ETIQUETA(nombre_etiqueta, articulo) values(?, ?)";
             con = DataBaseServices.getInstance().getConexion();
             PreparedStatement prepareStatement = con.prepareStatement(query);
             //Antes de ejecutar seteo los parametros.
             prepareStatement.setString(1, etiqueta.getEtiqueta());
+            prepareStatement.setInt(2, etiqueta.getArticulo());
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0 ;
         } catch (SQLException ex) {
@@ -277,4 +288,53 @@ public class ArticuloServices {
 
     }
 
+    public Etiqueta getEtiqueta(int idEtiqueta){
+        Etiqueta tag = null;
+        Connection con = null;
+
+        try {
+            String consultaSql = "SELECT * FROM etiqueta WHERE id = ?";
+            con = DataBaseServices.getInstance().getConexion();
+
+            PreparedStatement preparedStatement = con.prepareStatement(consultaSql);
+            preparedStatement.setInt(1, idEtiqueta);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            ArrayList<Etiqueta> misEtiquetas = new ArrayList<>();
+            while (rs.next()) {
+                tag = new Etiqueta();
+                tag.setId(rs.getInt("id"));
+                tag.setEtiqueta(rs.getString("nombre_etiqueta"));
+                tag.setArticulo(rs.getInt("articulo"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tag;
+    }
+    public ArrayList<Etiqueta> getAllEtiquetas(){
+        Etiqueta tag = null;
+        Connection con = null;
+        ArrayList<Etiqueta> misEtiquetas = new ArrayList<>();
+
+        try {
+            String consultaSql = "SELECT * FROM etiqueta";
+            con = DataBaseServices.getInstance().getConexion();
+
+            PreparedStatement preparedStatement = con.prepareStatement(consultaSql);
+            ResultSet rs = preparedStatement.executeQuery();
+
+
+            while (rs.next()) {
+                tag = new Etiqueta();
+                tag.setId(rs.getInt("id"));
+                tag.setEtiqueta(rs.getString("nombre_etiqueta"));
+                tag.setArticulo(rs.getInt("articulo"));
+                misEtiquetas.add(tag);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return misEtiquetas;
+    }
 }

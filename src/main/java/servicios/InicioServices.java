@@ -38,7 +38,7 @@ public class InicioServices {
                 "(\n" +
                     " id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,\n" +
                     " nombre_etiqueta VARCHAR(256) NOT NULL,\n" +
-                    //" ARTICULO INTEGER NOT NULL,\n" +
+                    " ARTICULO INTEGER NOT NULL,\n" +
                 ");";
         sql += "\nCREATE TABLE IF NOT EXISTS COMENTARIO\n" +
                 "(\n" +
@@ -50,6 +50,7 @@ public class InicioServices {
         sql += "\nALTER TABLE comentario ADD FOREIGN KEY (autor) REFERENCES usuario(username);";
         sql += "\nALTER TABLE articulo ADD FOREIGN KEY (autor) REFERENCES usuario(username);";
         sql += "\nALTER TABLE comentario ADD FOREIGN KEY (articulo) REFERENCES articulo(id);";
+        sql += "\nALTER TABLE etiqueta ADD FOREIGN KEY (articulo) REFERENCES articulo(id);";
 
         Connection con = DataBaseServices.getInstance().getConexion();
         Statement stm = con.createStatement();
