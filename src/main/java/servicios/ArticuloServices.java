@@ -32,8 +32,14 @@ public class ArticuloServices {
                 art.setId(rs.getInt("id"));
                 art.setTitulo(rs.getString("titulo"));
                 art.setCuerpo(rs.getString("cuerpo"));
+                //if (art.getCuerpo().length() <= 30 && art.getCuerpo().length() > 0)
                 art.setFecha(rs.getDate("fecha"));
                 art.setAutor(rs.getString("autor"));
+                if (art.getCuerpo().length() > 70){
+                    art.setCuerpoHome(art.getCuerpo().substring(0, 70));
+                }else {
+                    art.setCuerpoHome(art.getCuerpo());
+                }
                 System.out.println(art.getTitulo());
                 lista.add(art);
             }
