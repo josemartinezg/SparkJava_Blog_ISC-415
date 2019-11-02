@@ -196,10 +196,10 @@ public class Main {
             boolean isauthor = false;
             String auxIsAdmin = request.queryParams("isadmin");
             String auxIsAuthor = request.queryParams("isauthor");
-            if(auxIsAdmin.equals("on")){
+            if(auxIsAdmin != null && auxIsAdmin.equals("on")){
                 isadmin = true;
             }
-            if(auxIsAuthor.equals("on")){
+            if(auxIsAuthor != null && auxIsAuthor.equals("on")){
                 isauthor = true;
             }
             System.out.println(request.queryParams("isauthor"));
