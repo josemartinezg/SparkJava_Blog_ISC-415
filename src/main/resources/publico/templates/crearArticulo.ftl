@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <#if editable != "si">
-        <link rel="icon" href="assets/img/favicon.ico">
+        <link rel="icon" href="../assets/img/favicon.ico">
         <!-- Bootstrap core CSS -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom styles for this template -->
@@ -86,11 +86,11 @@
                 </form>
             </#if>
             <#if editable == "si">
-                <form method="post" action="/postArticulo/">
+                <form method="post" action="/editarPost/${articulo.id}"">
                     <div class="row">
                         <div class="col form-group">
                             <label for="title">Titulo</label>
-                            <input id="titulo" name="titulo" class="form-control" input="${articulo.titulo}" type="text">
+                            <input id="titulo" name="titulo" class="form-control" value="${articulo.titulo}" type="text">
                         </div>
                     </div>
                     <div class="row">

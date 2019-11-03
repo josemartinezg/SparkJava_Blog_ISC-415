@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <article class="card-body">
-                        <form action="/editarPost/${articulo.id}" method="post"  enctype="application/x-www-form-urlencoded">
+                        <form action="/hacerLogin/" method="post"  enctype="application/x-www-form-urlencoded">
                             <div class="row">
                                 <div class="col form-group">
                                     <label>Username</label>

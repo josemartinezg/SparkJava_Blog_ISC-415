@@ -119,14 +119,20 @@ public class Main {
             Articulo articulo = articuloServices.getArticulo(idArticulo);
             ArrayList<Etiqueta> misEtiquetas;
             misEtiquetas = articuloServices.getAllEtiquetas();
+            for (Etiqueta tag : misEtiquetas){
+                if (tag.getArticulo() == idArticulo){
+                    auxList.add(tag);
+                }
+            }
             int idx = 1;
-            for (Etiqueta tag : articulo.getListaEtiquetas()){
-                if (idx <= articulo.getListaEtiquetas().size()){
+            for (Etiqueta tag : auxList){
+                if (idx < auxList.size()){
                     tags += tag + ", ";
                     //auxList.add(tag);
                 }else{
                     tags += tag;
                 }
+                idx++;
             }
             //articulo.setListaEtiquetas(auxList);
             attributes.put("titulo", "Edit Post");
@@ -174,6 +180,23 @@ public class Main {
             Articulo articulo = articuloServices.getArticulo(idArt);
             articulo.setCuerpo(request.queryParams("cuerpo"));
             articulo.setTitulo(request.queryParams("titulo"));
+            //Enviar a una función:
+            String etiquetas = request.queryParams("etiquetas");
+            String inputTags[] = etiquetas.split(",");
+            ArrayList<Etiqueta> auxList = new ArrayList<>();
+            for (String etiqueta: inputTags) {
+                for (Etiqueta tagAux : articulo.getListaEtiquetas()) {
+                    if (etiqueta != tagAux.getEtiqueta()) {
+                        Etiqueta etiquetaAux = new Etiqueta();
+                        etiquetaAux.setEtiqueta(etiqueta);
+                        etiquetaAux.setArticulo(idArt);
+                        articuloServices.crearEtiqueta(etiquetaAux);
+                        auxList.add(etiquetaAux);
+                    }
+                }
+            }
+            articulo.setListaEtiquetas(auxList);
+            //**********************************
             articuloServices.updateArticulo(articulo);
             response.redirect("/articulo/" + String.valueOf(articulo.getId()));
             return null;

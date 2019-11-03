@@ -14,8 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="../assets/css/mediumish.css" rel="stylesheet">
-    <link href="vendor/select2/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="vendor/select2/dist/js/select2.min.js"></script>
+
 </head>
 <body>
 
