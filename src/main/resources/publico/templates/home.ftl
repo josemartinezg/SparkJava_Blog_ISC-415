@@ -59,7 +59,12 @@
                     <img class="img-fluid" src="assets/img/demopic/5.jpg" alt="">
                 </a>
                 <div class="card-block">
-                    <h2 class="card-title"><a href="/articulo/${art.id}">${art.titulo}</a></h2>
+                    <#if editable == "si">
+                        <h2 class="card-title"><a href="/editarArticulo/${art.id}">${art.titulo}</a></h2>
+                    </#if>
+                    <#if editable != "si">
+                        <h2 class="card-title"><a href="/articulo/${art.id}">${art.titulo}</a></h2>
+                    </#if>
                     <h4 class="card-text">${art.cuerpoHome}</h4>
                     <div class="metafooter">
                         <div class="wrapfooter">
