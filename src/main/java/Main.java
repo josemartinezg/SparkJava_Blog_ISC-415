@@ -185,15 +185,11 @@ public class Main {
             String inputTags[] = etiquetas.split(",");
             ArrayList<Etiqueta> auxList = new ArrayList<>();
             for (String etiqueta: inputTags) {
-                for (Etiqueta tagAux : articulo.getListaEtiquetas()) {
-                    if (etiqueta != tagAux.getEtiqueta()) {
-                        Etiqueta etiquetaAux = new Etiqueta();
-                        etiquetaAux.setEtiqueta(etiqueta);
-                        etiquetaAux.setArticulo(idArt);
-                        articuloServices.crearEtiqueta(etiquetaAux);
-                        auxList.add(etiquetaAux);
-                    }
-                }
+                Etiqueta etiquetaAux = new Etiqueta();
+                etiquetaAux.setEtiqueta(etiqueta);
+                etiquetaAux.setArticulo(idArt);
+                articuloServices.crearEtiqueta(etiquetaAux);
+                auxList.add(etiquetaAux);
             }
             articulo.setListaEtiquetas(auxList);
             //**********************************
