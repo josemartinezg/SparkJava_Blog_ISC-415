@@ -178,13 +178,13 @@ public class Main {
                 System.out.println(u.toString());
                 if (username.equalsIgnoreCase(u.getUsername()) && password.equals(u.getPassword())) {
                     usuario = new Usuario(u.getUsername(), u.getNombre(), u.getPassword(), u.isAdministrator(), u.isAuthor());
+                    response.redirect("/home");
                 }
             }
 
             session.attribute("usuario", usuario);
             //redireccionado a la otra URL.
-            response.redirect("/home");
-
+            response.redirect("/login");
             return "";
         });
 

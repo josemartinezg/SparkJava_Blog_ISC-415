@@ -53,13 +53,13 @@
                         <div class="row justify-content-center">
                             <div class="col-auto my-1">
                                 <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input name="isadmin" type="checkbox" class="custom-control-input" id="isadmin" value="off">
+                                    <input name="isadmin" type="checkbox" class="custom-control-input" id="isadmin">
                                     <label class="custom-control-label" for="isadmin">Administrador</label>
                                 </div>
                             </div>
                             <div class="col-auto my-1">
                                 <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input name="isauthor" type="checkbox" class="custom-control-input" id="isauthor" value="on">
+                                    <input name="isauthor" type="checkbox" class="custom-control-input" id="isauthor">
                                     <label class="custom-control-label" for="isauthor">Autor</label>
                                 </div>
                             </div>
