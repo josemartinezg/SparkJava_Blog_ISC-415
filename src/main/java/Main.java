@@ -178,13 +178,13 @@ public class Main {
                 System.out.println(u.toString());
                 if (username.equalsIgnoreCase(u.getUsername()) && password.equals(u.getPassword())) {
                     usuario = new Usuario(u.getUsername(), u.getNombre(), u.getPassword(), u.isAdministrator(), u.isAuthor());
+                    response.redirect("/home");
                 }
             }
 
             session.attribute("usuario", usuario);
             //redireccionado a la otra URL.
-            response.redirect("/home");
-
+            response.redirect("/login");
             return "";
         });
 
@@ -196,10 +196,10 @@ public class Main {
             boolean isauthor = false;
             String auxIsAdmin = request.queryParams("isadmin");
             String auxIsAuthor = request.queryParams("isauthor");
-            if(auxIsAdmin.equals("on")){
+            if(auxIsAdmin != null && auxIsAdmin.equals("on")){
                 isadmin = true;
             }
-            if(auxIsAuthor.equals("on")){
+            if(auxIsAuthor != null && auxIsAuthor.equals("on")){
                 isauthor = true;
             }
             System.out.println(request.queryParams("isauthor"));
