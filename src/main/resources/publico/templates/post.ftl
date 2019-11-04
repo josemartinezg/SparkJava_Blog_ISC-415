@@ -76,7 +76,7 @@
                     <div class="col-md-10">
                         <!--SI EXPLOTA ES PQ EL USUARIO NO SE HA LOGGED IN-->
                         <a class="link-dark" href="author.html">${articulo.autor}</a><a href="#" class="btn follow">Follow</a>
-                        <span class="author-description">Founder of WowThemes.net and creator of <b>"Mediumish"</b> theme that you're currently previewing. Developing professional premium themes, templates, plugins, scripts since 2012.</span>
+                        <span class="author-description">Computer Science professional. Cheif SE editor since 2017.</span>
                         <span class="post-date">${articulo.fecha}</span><span class="dot"></span><span class="post-read">6 min read</span>
                     </div>
                 </div>
@@ -100,7 +100,6 @@
                     <#list articulo.listaEtiquetas as art>
                     <li><a href="#">${art.etiqueta}</a></li>
                     </#list>
-                    <li><a href="#">EmptyTag</a></li>
                 </ul>
             </div>
             <!-- End Tags -->
@@ -112,6 +111,53 @@
 </div>
 <!-- End Article
 ================================================== -->
+<#--            Panel de Comentarios-->
+<div class="row bootstrap snippets">
+    <div class="col-md-6 col-md-offset-2 col-sm-12">
+        <div class="comment-wrapper">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Comment panel
+                </div>
+
+                <div class="panel-body">
+                    <form action="/comentar/${articulo.id}" method="post">
+                        <textarea class="form-control" name="comentario" placeholder="Write a comment..." id="comentario" rows="4"></textarea>
+                        <button type="submit" class="btn btn-info pull-right">Post</button>
+                    </form>
+                    <br>
+
+                    <div class="clearfix"></div>
+
+                    <!-- Inicio Comentario -->
+                    <hr>
+                    <ul class="media-list">
+                        <#list articulo.listaComentarios as comment>
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                </a>
+
+                                <div class="media-body">
+                                                <span class="text-muted pull-right">
+                                                    <small class="text-muted">30 min ago</small>
+                                                </span>
+                                    <strong class="text-success">${comment.autor}</strong>
+                                    <p>
+                                        ${comment.comentario}
+                                    </p>
+                                </div>
+                                <!-- Final Comentario -->
+                            </li>
+                        </#list>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</br>
 
 <!-- Begin Footer
 ================================================== -->

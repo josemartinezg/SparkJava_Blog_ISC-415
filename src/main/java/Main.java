@@ -106,12 +106,14 @@ public class Main {
         Spark.get("/crearArticulo", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
+            attributes.put("editable", "no");
             Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "crearArticulo.ftl");
         }, freeMarkerEngine);
 
         Spark.get("/editarArticulo/:id", (request, response) -> {
+            Session session = request.session(true);
             Map<String, Object> attributes = new HashMap<>();
             int idArticulo = Integer.valueOf(request.params("id"));
             ArrayList<Etiqueta> auxList = new ArrayList<>();
@@ -135,11 +137,13 @@ public class Main {
                 idx++;
             }
             //articulo.setListaEtiquetas(auxList);
+            if(session.attribute("usuario") == null || session.attribute("usuario") == ""){
+                response.redirect("/login");
+            }
             attributes.put("titulo", "Edit Post");
             attributes.put("editable", "si");
             attributes.put("articulo", articulo);
             attributes.put("etiquetas", tags);
-            Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "crearArticulo.ftl");
         }, freeMarkerEngine);
@@ -203,15 +207,15 @@ public class Main {
             int idArticulo = Integer.valueOf(request.params("id"));
             Articulo articulo = articuloServices.getArticulo(idArticulo);
             System.out.println(articulo);
-            ArrayList<Etiqueta> auxList = new ArrayList<>();
-            ArrayList<Etiqueta> misEtiquetas;
-            misEtiquetas = articuloServices.getAllEtiquetas();
-            for (Etiqueta tag : misEtiquetas){
-                if (tag.getArticulo() == idArticulo){
-                    auxList.add(tag);
-                }
-            }
-            articulo.setListaEtiquetas(auxList);
+//            ArrayList<Etiqueta> auxList = new ArrayList<>();
+//            ArrayList<Etiqueta> misEtiquetas;
+//            misEtiquetas = articuloServices.getAllEtiquetas();
+//            for (Etiqueta tag : misEtiquetas){
+//                if (tag.getArticulo() == idArticulo){
+//                    auxList.add(tag);
+//                }
+//            }
+//            articulo.setListaEtiquetas(auxList);
             attributes.put("articulo", articulo);
             System.out.println(articulo.getListaEtiquetas().toString());
             Session session = request.session(true);
@@ -305,6 +309,26 @@ public class Main {
             if(session.attribute("usuario") == null)
                 session.attribute("usuario", "");
         });
+
+        Spark.post("/comentar/:id", (request, response) -> {
+            int codigo = Integer.valueOf(request.params("id"));
+            String comentario = request.queryParams("comentario");
+            //StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+            //textEncryptor.setPassword(contrasenia);
+
+            Session session = request.session(true);
+            String username = session.attribute("usuario").toString();
+            //String usuario = textEncryptor.decrypt(request.cookie("usuario"));
+            if (session.attribute("usuario") != null || session.attribute("usuario") != "") {
+                Comentario coment = new Comentario();
+                coment.setComentario(comentario);
+                coment.setAutor(username);
+                articuloServices.crearComentario(coment, codigo);
+                response.redirect("/articulo/" + String.valueOf(codigo));
+            }
+            response.redirect("/articulo/" + String.valueOf(codigo));
+            return null;
+        }, freeMarkerEngine);
 
 //        before("/crearArticulo",(request, response) -> {
 //            Usuario usuario = request.session().attribute("usuario");

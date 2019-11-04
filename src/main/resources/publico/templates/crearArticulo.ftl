@@ -86,7 +86,7 @@
                 </form>
             </#if>
             <#if editable == "si">
-                <form method="post" action="/editarPost/${articulo.id}"">
+                <form method="post" action="/editarPost/${articulo.id}">
                     <div class="row">
                         <div class="col form-group">
                             <label for="title">Titulo</label>
@@ -102,20 +102,7 @@
                     <#--    ESTE TEMA AMASTE               -->
                     <label for="etiquetas">Etiquetas</label>
                     <input name="etiquetas" class="form-control" value="${etiquetas}" type="text">
-                    <div class="row">
-                        <label for="etiquetas">Tags</label>
-                        <select id="etiquetas" class="form-control" multiple="multiple">
-                            <option selected="selected">orange</option>
-                            <option>white</option>
-                            <option selected="selected">purple</option>
-                        </select>
-                        <script>
-                            $(".js-example-tags").select2({
-                                tags: true
-                            });
-                        </script>
 
-                    </div>
                     <br/>
                     <div class="row align-items-center">
                         <div class="col">
@@ -125,6 +112,7 @@
                     </div>
                 </form>
             </#if>
+
         </div>
     </div>
 </div>

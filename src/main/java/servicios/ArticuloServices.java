@@ -124,10 +124,10 @@ public class ArticuloServices {
             preparedStatementAtributo.setInt(1, codigoArticulo);
             ResultSet rsArticulo = preparedStatementAtributo.executeQuery();
             ArrayList<Etiqueta> misEtiquetas = new ArrayList<>();
-            while (rs.next()) {
+            while (rsArticulo.next()) {
                 Etiqueta tag = new Etiqueta();
-                tag.setId(rs.getInt("id"));
-                tag.setEtiqueta(rs.getString("nombre"));
+                tag.setArticulo(codigoArticulo);
+                tag.setEtiqueta(rsArticulo.getString("nombre_etiqueta"));
                 misEtiquetas.add(tag);
             }
             String consultaSqlComentario = "SELECT * FROM comentario WHERE articulo = ?";
