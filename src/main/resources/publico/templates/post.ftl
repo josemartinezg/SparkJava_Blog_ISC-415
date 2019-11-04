@@ -119,12 +119,16 @@
                 <div class="panel-heading">
                     Comment panel
                 </div>
-
-                <div class="panel-body">
+                <#if usuario != "">
                     <form action="/comentar/${articulo.id}" method="post">
                         <textarea class="form-control" name="comentario" placeholder="Write a comment..." id="comentario" rows="4"></textarea>
                         <button type="submit" class="btn btn-info pull-right">Post</button>
                     </form>
+                </#if>
+                 <#if usuario == "">
+                     <div> Pleas Sign In to Comment</div>
+                 </#if>
+                <div class="panel-body">
                     <br>
 
                     <div class="clearfix"></div>
