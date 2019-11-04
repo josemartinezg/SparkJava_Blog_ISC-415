@@ -289,7 +289,6 @@ public class ArticuloServices {
 
     public boolean borrarComentario(int idComentario) {
         boolean ok = false;
-
         Connection con = null;
 
         try {

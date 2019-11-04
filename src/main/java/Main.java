@@ -220,6 +220,10 @@ public class Main {
             System.out.println(articulo.getListaEtiquetas().toString());
             Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
+            Usuario userAux = usuarioServices.getUsuario(session.attribute("usuario").toString());
+            if (userAux != null){
+                attributes.put("isAdmin", userAux.isAdministrator());
+            }
             System.out.println(articulo.getListaEtiquetas().toString());
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
@@ -329,7 +333,11 @@ public class Main {
             response.redirect("/articulo/" + String.valueOf(codigo));
             return null;
         }, freeMarkerEngine);
-
+        Spark.get("/eliminarComentario/:idComentario/:idArticulo", (request, response) -> {
+            articuloServices.borrarComentario(Integer.valueOf(request.params("idComentario")));
+            response.redirect("/articulo/" + String.valueOf(request.params("idArticulo")));
+            return null;
+        }, freeMarkerEngine);
 //        before("/crearArticulo",(request, response) -> {
 //            Usuario usuario = request.session().attribute("usuario");
 //            if(usuario==null){
