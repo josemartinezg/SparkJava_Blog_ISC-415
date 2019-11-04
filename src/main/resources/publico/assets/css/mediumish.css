@@ -40,6 +40,7 @@ License: https://www.wowthemes.net/freebies-license/
 
 body {
 	padding-top:5rem;
+
 }
 .mainheading {
 	padding:1rem 0rem;
@@ -474,6 +475,10 @@ ul.tags li a:hover {
 	line-height:22px;
 	border-radius:50%;
 	font-size:12px;
+}
+
+.panel{
+	margin: 0 auto;
 }
 
 .comment-wrapper .panel-body {

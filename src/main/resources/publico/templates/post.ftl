@@ -103,65 +103,67 @@
                 </ul>
             </div>
             <!-- End Tags -->
+            <div class="comment-wrapper">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Comment panel
+                    </div>
+                    <#if usuario != "">
+                        <form action="/comentar/${articulo.id}" method="post">
+                            <textarea class="form-control" name="comentario" placeholder="Write a comment..." id="comentario" rows="4"></textarea>
+                            <button type="submit" class="btn btn-info pull-right">Post</button>
+                        </form>
+                    </#if>
+                    <#if usuario == "">
+                        <div> Pleas Sign In to Comment</div>
+                    </#if>
+                    <div class="panel-body">
+                        <br>
+
+                        <div class="clearfix"></div>
+
+                        <!-- Inicio Comentario -->
+                        <hr>
+                        <ul class="media-list">
+                            <#list articulo.listaComentarios as comment>
+                                <li class="media">
+                                    <a href="#" class="pull-left">
+                                        <img class="author-thumb" src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                    </a>
+
+                                    <div class="media-body">
+                                                <span class="text-muted pull-right">
+                                                    <small class="text-muted">30 min ago</small>
+                                                </span>
+                                        <strong class="text-success">${comment.autor}</strong>
+                                        <p>
+                                            ${comment.comentario}
+                                        </p>
+                                    </div>
+                                    <!-- Final Comentario -->
+                                </li>
+                            </#list>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <!-- End Post -->
 
     </div>
+    <#--            Panel de Comentarios-->
+    <div class="row bootstrap snippets panel">
+        <div class="col-md-8 col-md-offset-2 col-xs-12">
+
+
+        </div>
+    </div>
+    </br>
 </div>
 <!-- End Article
 ================================================== -->
-<#--            Panel de Comentarios-->
-<div class="row bootstrap snippets">
-    <div class="col-md-6 col-md-offset-2 col-sm-12">
-        <div class="comment-wrapper">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    Comment panel
-                </div>
-                <#if usuario != "">
-                    <form action="/comentar/${articulo.id}" method="post">
-                        <textarea class="form-control" name="comentario" placeholder="Write a comment..." id="comentario" rows="4"></textarea>
-                        <button type="submit" class="btn btn-info pull-right">Post</button>
-                    </form>
-                </#if>
-                 <#if usuario == "">
-                     <div> Pleas Sign In to Comment</div>
-                 </#if>
-                <div class="panel-body">
-                    <br>
 
-                    <div class="clearfix"></div>
-
-                    <!-- Inicio Comentario -->
-                    <hr>
-                    <ul class="media-list">
-                        <#list articulo.listaComentarios as comment>
-                            <li class="media">
-                                <a href="#" class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
-                                </a>
-
-                                <div class="media-body">
-                                                <span class="text-muted pull-right">
-                                                    <small class="text-muted">30 min ago</small>
-                                                </span>
-                                    <strong class="text-success">${comment.autor}</strong>
-                                    <p>
-                                        ${comment.comentario}
-                                    </p>
-                                </div>
-                                <!-- Final Comentario -->
-                            </li>
-                        </#list>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-</br>
 
 <!-- Begin Footer
 ================================================== -->
