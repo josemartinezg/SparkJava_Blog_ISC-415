@@ -43,9 +43,6 @@ public class Etiqueta {
 
     @Override
     public String toString() {
-        return "Etiqueta{" +
-                "id=" + id +
-                ", etiqueta='" + etiqueta + '\'' +
-                '}';
+        return etiqueta;
     }
 }

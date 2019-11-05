@@ -36,7 +36,7 @@ public class Main {
         InicioServices.iniciarDb();
         DataBaseServices.getInstance().testConexion();
         InicioServices.crearTablas();
-        InicioServices.crearAdministrador();
+        //InicioServices.crearAdministrador();
 
         ArticuloServices articuloServices = new ArticuloServices();
         UsuarioServices usuarioServices = new UsuarioServices();
@@ -73,10 +73,25 @@ public class Main {
 
         Spark.get("/home", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
-            attributes.put("titulo", "Login");
+            attributes.put("titulo", "Home");
             List<Articulo> articulos = articuloServices.selectArticulos();
             attributes.put("articulos", articulos);
+            attributes.put("editable", "no");
             Session session = request.session(true);
+            attributes.put("usuario", session.attribute("usuario"));
+            return new ModelAndView(attributes, "home.ftl");
+        }, freeMarkerEngine);
+
+        Spark.get("/misPosts", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            Session session = request.session(true);
+            if(session.attribute("usuario") == null || session.attribute("usuario") == ""){
+                response.redirect("/login");
+            }
+            attributes.put("titulo", "My Posts");
+            attributes.put("editable", "si");
+            List<Articulo> articulosUsuario = articuloServices.selectMisArticulos(session.attribute("usuario").toString());
+            attributes.put("articulos", articulosUsuario);
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "home.ftl");
         }, freeMarkerEngine);
@@ -92,7 +107,44 @@ public class Main {
         Spark.get("/crearArticulo", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
+            attributes.put("editable", "no");
             Session session = request.session(true);
+            attributes.put("usuario", session.attribute("usuario"));
+            return new ModelAndView(attributes, "crearArticulo.ftl");
+        }, freeMarkerEngine);
+
+        Spark.get("/editarArticulo/:id", (request, response) -> {
+            Session session = request.session(true);
+            Map<String, Object> attributes = new HashMap<>();
+            int idArticulo = Integer.valueOf(request.params("id"));
+            ArrayList<Etiqueta> auxList = new ArrayList<>();
+            String tags = "";
+            Articulo articulo = articuloServices.getArticulo(idArticulo);
+            ArrayList<Etiqueta> misEtiquetas;
+            misEtiquetas = articuloServices.getAllEtiquetas();
+            for (Etiqueta tag : misEtiquetas){
+                if (tag.getArticulo() == idArticulo){
+                    auxList.add(tag);
+                }
+            }
+            int idx = 1;
+            for (Etiqueta tag : auxList){
+                if (idx < auxList.size()){
+                    tags += tag + ", ";
+                    //auxList.add(tag);
+                }else{
+                    tags += tag;
+                }
+                idx++;
+            }
+            //articulo.setListaEtiquetas(auxList);
+            if(session.attribute("usuario") == null || session.attribute("usuario") == ""){
+                response.redirect("/login");
+            }
+            attributes.put("titulo", "Edit Post");
+            attributes.put("editable", "si");
+            attributes.put("articulo", articulo);
+            attributes.put("etiquetas", tags);
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "crearArticulo.ftl");
         }, freeMarkerEngine);
@@ -126,24 +178,53 @@ public class Main {
             return null;
         }, freeMarkerEngine);
 
+        Spark.post("/editarPost/:id", (request, response) -> {
+            int idArt = Integer.valueOf(request.params("id"));
+            System.out.println(idArt);
+
+            Articulo articulo = articuloServices.getArticulo(idArt);
+            articulo.setCuerpo(request.queryParams("cuerpo"));
+            articulo.setTitulo(request.queryParams("titulo"));
+            //Enviar a una función:
+            String etiquetas = request.queryParams("etiquetas");
+            String inputTags[] = etiquetas.split(",");
+            ArrayList<Etiqueta> auxList = new ArrayList<>();
+            for (String etiqueta: inputTags) {
+                Etiqueta etiquetaAux = new Etiqueta();
+                etiquetaAux.setEtiqueta(etiqueta);
+                etiquetaAux.setArticulo(idArt);
+                articuloServices.crearEtiqueta(etiquetaAux);
+                auxList.add(etiquetaAux);
+            }
+            articulo.setListaEtiquetas(auxList);
+            //**********************************
+            articuloServices.updateArticulo(articulo);
+            response.redirect("/articulo/" + String.valueOf(articulo.getId()));
+            return null;
+        }, freeMarkerEngine);
+
         Spark.get("/articulo/:id", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             int idArticulo = Integer.valueOf(request.params("id"));
             Articulo articulo = articuloServices.getArticulo(idArticulo);
             System.out.println(articulo);
-            ArrayList<Etiqueta> auxList = new ArrayList<>();
-            ArrayList<Etiqueta> misEtiquetas;
-            misEtiquetas = articuloServices.getAllEtiquetas();
-            for (Etiqueta tag : misEtiquetas){
-                if (tag.getArticulo() == idArticulo){
-                    auxList.add(tag);
-                }
-            }
-            articulo.setListaEtiquetas(auxList);
+//            ArrayList<Etiqueta> auxList = new ArrayList<>();
+//            ArrayList<Etiqueta> misEtiquetas;
+//            misEtiquetas = articuloServices.getAllEtiquetas();
+//            for (Etiqueta tag : misEtiquetas){
+//                if (tag.getArticulo() == idArticulo){
+//                    auxList.add(tag);
+//                }
+//            }
+//            articulo.setListaEtiquetas(auxList);
             attributes.put("articulo", articulo);
             System.out.println(articulo.getListaEtiquetas().toString());
             Session session = request.session(true);
             attributes.put("usuario", session.attribute("usuario"));
+            Usuario userAux = usuarioServices.getUsuario(session.attribute("usuario").toString());
+            if (userAux != null){
+                attributes.put("isAdmin", userAux.isAdministrator());
+            }
             System.out.println(articulo.getListaEtiquetas().toString());
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
@@ -157,6 +238,7 @@ public class Main {
             attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "author.ftl");
         }, freeMarkerEngine);
+
     //Mostrar el usuario que inició la sesión
         Spark.get("/author", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
@@ -251,6 +333,30 @@ public class Main {
                 session.attribute("usuario", "");
         });
 
+        Spark.post("/comentar/:id", (request, response) -> {
+            int codigo = Integer.valueOf(request.params("id"));
+            String comentario = request.queryParams("comentario");
+            //StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+            //textEncryptor.setPassword(contrasenia);
+
+            Session session = request.session(true);
+            String username = session.attribute("usuario").toString();
+            //String usuario = textEncryptor.decrypt(request.cookie("usuario"));
+            if (session.attribute("usuario") != null || session.attribute("usuario") != "") {
+                Comentario coment = new Comentario();
+                coment.setComentario(comentario);
+                coment.setAutor(username);
+                articuloServices.crearComentario(coment, codigo);
+                response.redirect("/articulo/" + String.valueOf(codigo));
+            }
+            response.redirect("/articulo/" + String.valueOf(codigo));
+            return null;
+        }, freeMarkerEngine);
+        Spark.get("/eliminarComentario/:idComentario/:idArticulo", (request, response) -> {
+            articuloServices.borrarComentario(Integer.valueOf(request.params("idComentario")));
+            response.redirect("/articulo/" + String.valueOf(request.params("idArticulo")));
+            return null;
+        }, freeMarkerEngine);
 //        before("/crearArticulo",(request, response) -> {
 //            Usuario usuario = request.session().attribute("usuario");
 //            if(usuario==null){

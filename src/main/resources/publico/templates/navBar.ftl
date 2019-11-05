@@ -15,7 +15,7 @@
                     <a class="nav-link" href="/home">Stories <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/post">Post</a>
+                    <a class="nav-link" href="/misPosts">My Posts</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/author">My Profile</a>

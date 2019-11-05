@@ -5,15 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="assets/img/favicon.ico">
+    <#if editable != "si">
+        <link rel="icon" href="../assets/img/favicon.ico">
+        <!-- Bootstrap core CSS -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="assets/css/mediumish.css" rel="stylesheet">
+    </#if>
+    <#if editable == "si">
+        <link rel="icon" href="../assets/img/favicon.ico">
+        <!-- Bootstrap core CSS -->
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="../assets/css/mediumish.css" rel="stylesheet">
+    </#if>
     <title>Mediumish</title>
-    <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <!-- Fonts -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="assets/css/mediumish.css" rel="stylesheet">
     <!-- Textarea -->
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.11/css/select2.min.css" rel="stylesheet" />
@@ -36,44 +45,74 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col">
-            <form method="post" action="/postArticulo/">
-                <div class="row">
-                    <div class="col form-group">
-                        <label for="title">Title</label>
-                        <input id="titulo" name="titulo" class="form-control" placeholder="Title" type="text">
+            <#if editable != "si">
+                <form method="post" action="/postArticulo/">
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="title">Title</label>
+                            <input id="titulo" name="titulo" class="form-control" placeholder="Title" type="text">
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <label for="default">Content</label>
-                        <textarea id="default" name="cuerpo">Write your Post here!</textarea>
+                    <div class="row">
+                        <div class="col">
+                            <label for="default">Content</label>
+                            <textarea id="default" name="cuerpo">Write your Post here!</textarea>
+                        </div>
                     </div>
-                </div>
-<#--    ESTE TEMA AMASTE               -->
-                <label for="etiquetas">Etiquetas</label>
-                <input name="etiquetas" class="form-control" placeholder="Enter your tags here, separated by commas..." type="text">
-                <div class="row">
-                    <label for="etiquetas">Tags</label>
-                    <select id="etiquetas" class="form-control" multiple="multiple">
-                        <option selected="selected">orange</option>
-                        <option>white</option>
-                        <option selected="selected">purple</option>
-                    </select>
-                    <script>
-                        $(".js-example-tags").select2({
-                            tags: true
-                        });
-                    </script>
+    <#--    ESTE TEMA AMASTE               -->
+                    <label for="etiquetas">Etiquetas</label>
+                    <input name="etiquetas" class="form-control" placeholder="Enter your tags here, separated by commas..." type="text">
+                    <div class="row">
+                        <label for="etiquetas">Tags</label>
+                        <select id="etiquetas" class="form-control" multiple="multiple">
+                            <option selected="selected">orange</option>
+                            <option>white</option>
+                            <option selected="selected">purple</option>
+                        </select>
+                        <script>
+                            $(".js-example-tags").select2({
+                                tags: true
+                            });
+                        </script>
 
-                </div>
-                <br/>
-                <div class="row align-items-center">
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary">Post</button>
-                        <a href="/home" class="btn btn-danger">Cancel</a>
                     </div>
-                </div>
-            </form>
+                    <br/>
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Post</button>
+                            <a href="/home" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </#if>
+            <#if editable == "si">
+                <form method="post" action="/editarPost/${articulo.id}">
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="title">Titulo</label>
+                            <input id="titulo" name="titulo" class="form-control" value="${articulo.titulo}" type="text">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="default">Content</label>
+                            <textarea id="default" name="cuerpo">${articulo.cuerpo}</textarea>
+                        </div>
+                    </div>
+                    <#--    ESTE TEMA AMASTE               -->
+                    <label for="etiquetas">Etiquetas</label>
+                    <input name="etiquetas" class="form-control" value="${etiquetas}" type="text">
+
+                    <br/>
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Post</button>
+                            <a href="/home" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </#if>
+
         </div>
     </div>
 </div>
@@ -97,10 +136,19 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
-<script src="assets/js/mediumish.js"></script>
+<#if editable != "si">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="assets/js/mediumish.js"></script>
+</#if>
+<#if editable == "si">
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="../assets/js/mediumish.js"></script>
+</#if>
 </body>
 </html>
