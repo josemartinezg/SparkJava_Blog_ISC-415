@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Date;
 import encapsulacion.Usuario;
 import org.h2.engine.User;
+import org.jasypt.util.text.StrongTextEncryptor;
 import servicios.ArticuloServices;
 import servicios.DataBaseServices;
 import servicios.InicioServices;
@@ -29,7 +30,7 @@ import static spark.Spark.*;
 import spark.Session;
 
 public class Main {
-    private static Dao userDao;
+    private static String encriptorClave = "aHaf920@_9";
 
     public static void main(String[] args) throws SQLException {
         InicioServices.iniciarDb();
@@ -178,6 +179,19 @@ public class Main {
                 System.out.println(u.toString());
                 if (username.equalsIgnoreCase(u.getUsername()) && password.equals(u.getPassword())) {
                     usuario = new Usuario(u.getUsername(), u.getNombre(), u.getPassword(), u.isAdministrator(), u.isAuthor());
+                    int recordar = (request.queryParams("recordar") != null?86400:1000);
+                    StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+                    textEncryptor.setPassword(encriptorClave);
+                    String encriptedUsername = textEncryptor.encrypt(usuario.getUsername());
+                    String encriptedPassword = textEncryptor.encrypt(usuario.getPassword());
+                    String encriptedName = textEncryptor.encrypt(usuario.getNombre());
+                    String encriptedIsAdmin = textEncryptor.encrypt(String.valueOf(usuario.isAdministrator()));
+                    String encriptedIsAuthor = textEncryptor.encrypt(String.valueOf(usuario.isAuthor()));
+                    response.cookie("/", "username", encriptedUsername, recordar, false);
+                    response.cookie("/", "password", encriptedPassword, recordar, false);
+                    response.cookie("/", "nombre", encriptedName, recordar, false);
+                    response.cookie("/", "isadmin", encriptedIsAdmin, recordar, false);
+                    response.cookie("/", "isauthor", encriptedIsAuthor, recordar, false);
                     response.redirect("/home");
                 }
             }
@@ -216,6 +230,11 @@ public class Main {
             //creando cookie en para un minuto
             Session session = request.session();
             session.invalidate();
+            response.removeCookie("/", "username");
+            response.removeCookie("/", "nombre");
+            response.removeCookie("/", "password");
+            response.removeCookie("/", "isadmin");
+            response.removeCookie("/", "isauthor");
             response.redirect("/home");
             return "";
         });

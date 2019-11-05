@@ -25,4 +25,6 @@ dependencies {
     compile 'com.sparkjava:spark-template-freemarker:2.5.5'
     compile 'org.freemarker:freemarker:2.3.26-incubating'
     compile "org.slf4j:slf4j-simple:1.7.21"
+    // https://mvnrepository.com/artifact/org.jasypt/jasypt
+    compile group: 'org.jasypt', name: 'jasypt', version: '1.9.0'
 }
