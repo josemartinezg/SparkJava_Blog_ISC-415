@@ -3,6 +3,7 @@ package servicios;
 import encapsulacion.Articulo;
 import encapsulacion.Comentario;
 import encapsulacion.Etiqueta;
+import encapsulacion.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,6 +57,48 @@ public class ArticuloServices {
 
         return lista;
     }
+
+    public ArrayList<Articulo> selectMisArticulos(String username) {
+        ArrayList<Articulo> lista = new ArrayList<>();
+        Connection con = null;
+        try {
+            //Trayendo los articulos en el orden requetido en la práctica.
+            String query = "SELECT * FROM articulo WHERE autor = ? ORDER BY fecha DESC ";
+            con = DataBaseServices.getInstance().getConexion(); //referencia a la conexion.
+            //
+            PreparedStatement prepareStatement = con.prepareStatement(query);
+            prepareStatement.setString(1, username);
+            ResultSet rs = prepareStatement.executeQuery();
+            while(rs.next()){
+                Articulo art = new Articulo();
+                art.setId(rs.getInt("id"));
+                art.setTitulo(rs.getString("titulo"));
+                art.setCuerpo(rs.getString("cuerpo"));
+                //if (art.getCuerpo().length() <= 30 && art.getCuerpo().length() > 0)
+                art.setFecha(rs.getDate("fecha"));
+                art.setAutor(rs.getString("autor"));
+                if (art.getCuerpo().length() > 70){
+                    art.setCuerpoHome(art.getCuerpo().substring(0, 70));
+                }else {
+                    art.setCuerpoHome(art.getCuerpo());
+                }
+                System.out.println(art.getTitulo());
+                lista.add(art);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return lista;
+    }
+
     /* Obtener artículo específico (SELECT WHERE ID) */
     public Articulo getArticulo(int codigoArticulo) {
         Articulo articulo = null;
@@ -81,10 +124,10 @@ public class ArticuloServices {
             preparedStatementAtributo.setInt(1, codigoArticulo);
             ResultSet rsArticulo = preparedStatementAtributo.executeQuery();
             ArrayList<Etiqueta> misEtiquetas = new ArrayList<>();
-            while (rs.next()) {
+            while (rsArticulo.next()) {
                 Etiqueta tag = new Etiqueta();
-                tag.setId(rs.getInt("id"));
-                tag.setEtiqueta(rs.getString("nombre"));
+                tag.setArticulo(codigoArticulo);
+                tag.setEtiqueta(rsArticulo.getString("nombre_etiqueta"));
                 misEtiquetas.add(tag);
             }
             String consultaSqlComentario = "SELECT * FROM comentario WHERE articulo = ?";
@@ -246,7 +289,6 @@ public class ArticuloServices {
 
     public boolean borrarComentario(int idComentario) {
         boolean ok = false;
-
         Connection con = null;
 
         try {

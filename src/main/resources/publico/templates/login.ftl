@@ -42,6 +42,15 @@
                                     <input name="password" class="form-control" placeholder="******" type="password">
                                 </div> <!-- form-group// -->
                             </div>
+                            <div class="row justify-content-center">
+                                <div class="col-auto my-1">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                        <input name="recordar" type="checkbox" class="custom-control-input" id="recordar">
+                                        <label class="custom-control-label" for="recordar">Recordarme</label>
+                                    </div>
+                                    <br/>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col form-group">
                                     <button type="submit" class="btn btn-primary btn-block"> Login  </button>

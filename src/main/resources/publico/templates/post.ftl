@@ -14,8 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="../assets/css/mediumish.css" rel="stylesheet">
-    <link href="vendor/select2/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="vendor/select2/dist/js/select2.min.js"></script>
+
 </head>
 <body>
 
@@ -77,7 +76,7 @@
                     <div class="col-md-10">
                         <!--SI EXPLOTA ES PQ EL USUARIO NO SE HA LOGGED IN-->
                         <a class="link-dark" href="author.html">${articulo.autor}</a><a href="#" class="btn follow">Follow</a>
-                        <span class="author-description">Founder of WowThemes.net and creator of <b>"Mediumish"</b> theme that you're currently previewing. Developing professional premium themes, templates, plugins, scripts since 2012.</span>
+                        <span class="author-description">Computer Science professional. Cheif SE editor since 2017.</span>
                         <span class="post-date">${articulo.fecha}</span><span class="dot"></span><span class="post-read">6 min read</span>
                     </div>
                 </div>
@@ -101,18 +100,75 @@
                     <#list articulo.listaEtiquetas as art>
                     <li><a href="#">${art.etiqueta}</a></li>
                     </#list>
-                    <li><a href="#">EmptyTag</a></li>
                 </ul>
             </div>
             <!-- End Tags -->
+            <div class="comment-wrapper">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Comment panel
+                    </div>
+                    <#if usuario != "">
+                        <form action="/comentar/${articulo.id}" method="post">
+                            <textarea class="form-control" name="comentario" placeholder="Write a comment..." id="comentario" rows="4"></textarea>
+                            <button type="submit" class="btn btn-info pull-right">Post</button>
+                        </form>
+                    </#if>
+                    <#if usuario == "">
+                        <div> Pleas Sign In to Comment</div>
+                    </#if>
+                    <div class="panel-body">
+                        <br>
+
+                        <div class="clearfix"></div>
+
+                        <!-- Inicio Comentario -->
+                        <hr>
+                        <ul class="media-list">
+                            <#list articulo.listaComentarios as comment>
+                                <li class="media">
+                                    <a href="#" class="pull-left">
+                                        <img class="author-thumb" src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                    </a>
+
+                                    <div class="media-body">
+                                                <span class="text-muted pull-right">
+                                                    <small class="text-muted">30 min ago</small>
+                                                </span>
+                                        <strong class="text-success">${comment.autor}</strong>
+                                        <p>
+                                            ${comment.comentario}
+                                        </p>
+                                        <#if usuario != "" && isAdmin>
+                                            <span><a href="/eliminarComentario/${comment.id}/${articulo.id}"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25">
+                                                <path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z"
+                                                      fill-rule="evenodd"></path></svg></a></span>
+                                        </#if>
+                                    </div>
+                                    <!-- Final Comentario -->
+                                </li>
+                            </#list>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <!-- End Post -->
 
     </div>
+    <#--            Panel de Comentarios-->
+    <div class="row bootstrap snippets panel">
+        <div class="col-md-8 col-md-offset-2 col-xs-12">
+
+
+        </div>
+    </div>
+    </br>
 </div>
 <!-- End Article
 ================================================== -->
+
 
 <!-- Begin Footer
 ================================================== -->
