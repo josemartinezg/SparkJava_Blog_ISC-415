@@ -59,22 +59,10 @@
                             <textarea id="default" name="cuerpo">Write your Post here!</textarea>
                         </div>
                     </div>
-    <#--    ESTE TEMA AMASTE               -->
-                    <label for="etiquetas">Etiquetas</label>
-                    <input name="etiquetas" class="form-control" placeholder="Enter your tags here, separated by commas..." type="text">
-                    <div class="row">
+                    <div class="form-group">
+                        <br/>
                         <label for="etiquetas">Tags</label>
-                        <select id="etiquetas" class="form-control" multiple="multiple">
-                            <option selected="selected">orange</option>
-                            <option>white</option>
-                            <option selected="selected">purple</option>
-                        </select>
-                        <script>
-                            $(".js-example-tags").select2({
-                                tags: true
-                            });
-                        </script>
-
+                        <input name="etiquetas" class="form-control" placeholder="Enter your tags here, separated by commas..." type="text">
                     </div>
                     <br/>
                     <div class="row align-items-center">

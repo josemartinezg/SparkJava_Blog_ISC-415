@@ -1,3 +1,4 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import dao.*;
 import encapsulacion.Articulo;
 import encapsulacion.Comentario;
@@ -77,30 +78,71 @@ public class Main {
             List<Articulo> articulos = articuloServices.selectArticulos();
             attributes.put("articulos", articulos);
             attributes.put("editable", "no");
-            Session session = request.session(true);
-            attributes.put("usuario", session.attribute("usuario"));
+            StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+            textEncryptor.setPassword(encriptorClave);
+            Usuario usuario;
+            if(request.cookie("username") != null){
+                usuario = new Usuario(
+                        textEncryptor.decrypt(request.cookie("username")),
+                        textEncryptor.decrypt(request.cookie("nombre")),
+                        textEncryptor.decrypt(request.cookie("password")),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isadmin"))),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isauthor")))
+                );
+                attributes.put("usuario", usuario);
+            }else{
+                attributes.put("usuario", "");
+            }
+
             return new ModelAndView(attributes, "home.ftl");
         }, freeMarkerEngine);
 
         Spark.get("/misPosts", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
-            Session session = request.session(true);
-            if(session.attribute("usuario") == null || session.attribute("usuario") == ""){
+            StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+            Usuario usuario = null;
+            if(request.cookie("username") != null){
+                usuario = new Usuario(
+                        textEncryptor.decrypt(request.cookie("username")),
+                        textEncryptor.decrypt(request.cookie("nombre")),
+                        textEncryptor.decrypt(request.cookie("password")),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isadmin"))),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isauthor")))
+                );
+                attributes.put("usuario", usuario);
+                List<Articulo> articulosUsuario = articuloServices.selectMisArticulos(usuario.getUsername());
+                attributes.put("articulos", articulosUsuario);
+
+            }else{
+                attributes.put("usuario", "");
+            }
+
+            if(usuario == null || attributes.get("usuario") == ""){
                 response.redirect("/login");
             }
             attributes.put("titulo", "My Posts");
             attributes.put("editable", "si");
-            List<Articulo> articulosUsuario = articuloServices.selectMisArticulos(session.attribute("usuario").toString());
-            attributes.put("articulos", articulosUsuario);
-            attributes.put("usuario", session.attribute("usuario"));
             return new ModelAndView(attributes, "home.ftl");
         }, freeMarkerEngine);
 
         Spark.get("/articulo", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
-            Session session = request.session(true);
-            attributes.put("usuario", session.attribute("usuario").toString());
+            StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+            textEncryptor.setPassword(encriptorClave);
+            Usuario usuario;
+            if(request.cookie("username") != null){
+                usuario = new Usuario(
+                        textEncryptor.decrypt(request.cookie("username")),
+                        textEncryptor.decrypt(request.cookie("nombre")),
+                        textEncryptor.decrypt(request.cookie("password")),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isadmin"))),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isauthor")))
+                );
+                attributes.put("usuario", usuario.getUsername());
+            }else{
+                attributes.put("usuario", "");
+            }
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
 
@@ -108,15 +150,28 @@ public class Main {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Login");
             attributes.put("editable", "no");
-            Session session = request.session(true);
-            attributes.put("usuario", session.attribute("usuario"));
+            StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+            textEncryptor.setPassword(encriptorClave);
+            Usuario usuario;
+            if(request.cookie("username") != null){
+                usuario = new Usuario(
+                        textEncryptor.decrypt(request.cookie("username")),
+                        textEncryptor.decrypt(request.cookie("nombre")),
+                        textEncryptor.decrypt(request.cookie("password")),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isadmin"))),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isauthor")))
+                );
+                attributes.put("usuario", usuario);
+            }else{
+                attributes.put("usuario", "");
+            }
             return new ModelAndView(attributes, "crearArticulo.ftl");
         }, freeMarkerEngine);
 
         Spark.get("/editarArticulo/:id", (request, response) -> {
             Session session = request.session(true);
             Map<String, Object> attributes = new HashMap<>();
-            int idArticulo = Integer.valueOf(request.params("id"));
+            int idArticulo = Integer.parseInt(request.params("id"));
             ArrayList<Etiqueta> auxList = new ArrayList<>();
             String tags = "";
             Articulo articulo = articuloServices.getArticulo(idArticulo);
@@ -145,7 +200,21 @@ public class Main {
             attributes.put("editable", "si");
             attributes.put("articulo", articulo);
             attributes.put("etiquetas", tags);
-            attributes.put("usuario", session.attribute("usuario"));
+            StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+            textEncryptor.setPassword(encriptorClave);
+            Usuario usuario;
+            if(request.cookie("username") != null){
+                usuario = new Usuario(
+                        textEncryptor.decrypt(request.cookie("username")),
+                        textEncryptor.decrypt(request.cookie("nombre")),
+                        textEncryptor.decrypt(request.cookie("password")),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isadmin"))),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isauthor")))
+                );
+                attributes.put("usuario", usuario);
+            }else{
+                attributes.put("usuario", "");
+            }
             return new ModelAndView(attributes, "crearArticulo.ftl");
         }, freeMarkerEngine);
 
@@ -179,7 +248,7 @@ public class Main {
         }, freeMarkerEngine);
 
         Spark.post("/editarPost/:id", (request, response) -> {
-            int idArt = Integer.valueOf(request.params("id"));
+            int idArt = Integer.parseInt(request.params("id"));
             System.out.println(idArt);
 
             Articulo articulo = articuloServices.getArticulo(idArt);
@@ -205,7 +274,7 @@ public class Main {
 
         Spark.get("/articulo/:id", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
-            int idArticulo = Integer.valueOf(request.params("id"));
+            int idArticulo = Integer.parseInt(request.params("id"));
             Articulo articulo = articuloServices.getArticulo(idArticulo);
             System.out.println(articulo);
 //            ArrayList<Etiqueta> auxList = new ArrayList<>();
@@ -219,11 +288,24 @@ public class Main {
 //            articulo.setListaEtiquetas(auxList);
             attributes.put("articulo", articulo);
             System.out.println(articulo.getListaEtiquetas().toString());
-            Session session = request.session(true);
-            attributes.put("usuario", session.attribute("usuario"));
-            Usuario userAux = usuarioServices.getUsuario(session.attribute("usuario").toString());
-            if (userAux != null){
-                attributes.put("isAdmin", userAux.isAdministrator());
+            StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+            textEncryptor.setPassword(encriptorClave);
+            Usuario usuario;
+            if(request.cookie("username") != null){
+                usuario = new Usuario(
+                        textEncryptor.decrypt(request.cookie("username")),
+                        textEncryptor.decrypt(request.cookie("nombre")),
+                        textEncryptor.decrypt(request.cookie("password")),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isadmin"))),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isauthor")))
+                );
+                attributes.put("usuario", usuario);
+                Usuario userAux = usuarioServices.getUsuario(usuario.getUsername());
+                if (userAux != null){
+                    attributes.put("isAdmin", userAux.isAdministrator());
+                }
+            }else{
+                attributes.put("usuario", "");
             }
             System.out.println(articulo.getListaEtiquetas().toString());
             return new ModelAndView(attributes, "post.ftl");
@@ -234,8 +316,21 @@ public class Main {
             String username = request.params("username");
             Usuario author = usuarioServices.getUsuario(username);
             attributes.put("author", author);
-            Session session = request.session(true);
-            attributes.put("usuario", session.attribute("usuario"));
+            StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+            textEncryptor.setPassword(encriptorClave);
+            Usuario usuario;
+            if(request.cookie("username") != null){
+                usuario = new Usuario(
+                        textEncryptor.decrypt(request.cookie("username")),
+                        textEncryptor.decrypt(request.cookie("nombre")),
+                        textEncryptor.decrypt(request.cookie("password")),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isadmin"))),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isauthor")))
+                );
+                attributes.put("usuario", usuario);
+            }else{
+                attributes.put("usuario", "");
+            }
             return new ModelAndView(attributes, "author.ftl");
         }, freeMarkerEngine);
 
@@ -247,7 +342,21 @@ public class Main {
             if(session.attribute("usuario") == null || session.attribute("usuario") == ""){
                 response.redirect("/login");
             }
-            attributes.put("usuario", session.attribute("usuario"));
+            StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+            textEncryptor.setPassword(encriptorClave);
+            Usuario usuario;
+            if(request.cookie("username") != null){
+                usuario = new Usuario(
+                        textEncryptor.decrypt(request.cookie("username")),
+                        textEncryptor.decrypt(request.cookie("nombre")),
+                        textEncryptor.decrypt(request.cookie("password")),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isadmin"))),
+                        Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isauthor")))
+                );
+                attributes.put("usuario", usuario);
+            }else{
+                attributes.put("usuario", "");
+            }
             return new ModelAndView(attributes, "author.ftl");
         }, freeMarkerEngine);
 
@@ -340,7 +449,16 @@ public class Main {
             //textEncryptor.setPassword(contrasenia);
 
             Session session = request.session(true);
-            String username = session.attribute("usuario").toString();
+            StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+            textEncryptor.setPassword(encriptorClave);
+            Usuario usuario = new Usuario(
+                    textEncryptor.decrypt(request.cookie("username")),
+                    textEncryptor.decrypt(request.cookie("nombre")),
+                    textEncryptor.decrypt(request.cookie("password")),
+                    Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isadmin"))),
+                    Boolean.parseBoolean(textEncryptor.decrypt(request.cookie("isauthor")))
+            );
+            String username = usuario.getUsername();
             //String usuario = textEncryptor.decrypt(request.cookie("usuario"));
             if (session.attribute("usuario") != null || session.attribute("usuario") != "") {
                 Comentario coment = new Comentario();
@@ -353,7 +471,7 @@ public class Main {
             return null;
         }, freeMarkerEngine);
         Spark.get("/eliminarComentario/:idComentario/:idArticulo", (request, response) -> {
-            articuloServices.borrarComentario(Integer.valueOf(request.params("idComentario")));
+            articuloServices.borrarComentario(Integer.parseInt(request.params("idComentario")));
             response.redirect("/articulo/" + String.valueOf(request.params("idArticulo")));
             return null;
         }, freeMarkerEngine);
