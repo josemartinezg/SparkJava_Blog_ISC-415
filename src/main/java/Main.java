@@ -100,6 +100,7 @@ public class Main {
         Spark.get("/misPosts", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+            textEncryptor.setPassword(encriptorClave);
             Usuario usuario = null;
             if(request.cookie("username") != null){
                 usuario = new Usuario(
