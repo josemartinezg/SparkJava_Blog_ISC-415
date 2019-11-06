@@ -24,23 +24,28 @@
 
 <!-- Begin Top Author Page
 ================================================== -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8 col-md-offset-2">
-            <div class="mainheading">
-                <div class="row post-top-meta authorpage">
-                    <div class="col-md-10 col-xs-12">
-                        <h1>${usuario.nombre}</h1>
-                        <h2>${usuario.username}</h2>
-                        <span class="author-description"></span>
-                        <div class="sociallinks"><a  target="_blank" href="https://www.facebook.com/wowthemesnet/"><i class="fa fa-facebook"></i></a> <span class="dot"></span> <a target="_blank" href="https://plus.google.com/s/wowthemesnet/top"><i class="fa fa-google-plus"></i></a></div>
-                        <a target="_blank" href="https://twitter.com/wowthemesnet" class="btn follow">Follow</a>
-                    </div>
+<div class="container justify-content-center">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <h1>${usuario.nombre}</h1>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="card-body">
+            <div class="row">
+                <h2>${usuario.username}</h2>
+            </div>
+            <div class="row">
+                <span class="author-description"></span>
+            </div>
+            <div class="row">
+                <div class="sociallinks"><a  target="_blank" href="https://www.facebook.com/wowthemesnet/"><i class="fa fa-facebook"></i></a> <span class="dot"></span> <a target="_blank" href="https://plus.google.com/s/wowthemesnet/top"><i class="fa fa-google-plus"></i></a></div>
+            </div>
+            <div class="row">
+                <a target="_blank" href="https://twitter.com/wowthemesnet" class="btn follow">Follow</a>
+            </div>
+        </div>
 </div>
 <!-- End Top Author Meta
 ================================================== -->
