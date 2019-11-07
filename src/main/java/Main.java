@@ -227,7 +227,6 @@ public class Main {
             Date fecha = new Date(System.currentTimeMillis());
             Articulo articulo = new Articulo(titulo, cuerpo, autor, fecha);
             int idArt = articuloServices.insertArticulo(articulo);
-            articuloServices.insertArticulo(articulo);
             String etiquetas = request.queryParams("etiquetas");
             String inputTags[] = etiquetas.split(",");
             ArrayList<Etiqueta> auxList = new ArrayList<>();
