@@ -125,10 +125,10 @@ public class Articulo {
     }
 
     public String selectCuerpoHome(){
-        if (this.cuerpo.length() > 30){
-            this.cuerpoHome = this.cuerpo.substring(0, 30);
+        if (this.cuerpo.length() > 70){
+            this.cuerpoHome = this.cuerpo.substring(0, 70);
             return this.cuerpoHome;
-        }else if (this.cuerpo.length() <= 30 && this.cuerpo.length() > 0){
+        }else if (this.cuerpo.length() <= 70 && this.cuerpo.length() > 0){
             this.cuerpoHome = this.cuerpo;
             return this.cuerpoHome;
         }else{
