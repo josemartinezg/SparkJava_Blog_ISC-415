@@ -65,7 +65,7 @@
                         <#if editable != "si">
                             <h2 class="card-title"><a href="/articulo/${art.id}">${art.titulo}</a></h2>
                         </#if>
-                        <h4 class="card-blockquote">${art.selectCuerpoHome()}</h4>
+                        <h6 class="card-blockquote text-muted">${art.selectCuerpoHome()} ...</h6>
                         <div class="metafooter">
                             <div class="wrapfooter">
                             <span class="meta-footer-thumb">
