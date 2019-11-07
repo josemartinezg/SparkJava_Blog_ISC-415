@@ -25,27 +25,54 @@
 <!-- Begin Top Author Page
 ================================================== -->
 <div class="container justify-content-center">
-        <div class="card">
+    <div class="col-md-8">
+        <div class="card text-center text-capitalize">
             <div class="card-header">
-                <div class="row">
-                    <h1>${usuario.nombre}</h1>
+                <div class="row justify-content-center">
+                    <h1>Información de Usuario</h1>
                 </div>
             </div>
+            <div class="card-body">
+                <br/>
+                <form>
+                    <div class="form-group row justify-content-center">
+                        <div class="form-inline">
+                            <div class="col">
+                                <label for="username">Username</label>
+                            </div>
+                            <div class="col">
+                                <input id="username" name="username" type="text" value="${usuario.username}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center">
+                        <div class="form-inline">
+                            <div class="col">
+                                <label for="nombre">Nombre</label>
+                            </div>
+                            <div class="col">
+                                <input id="nombre" name="nombre" type="text" value="${usuario.nombre}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center">
+                        <div class="col">
+                            <div class="sociallinks">
+                                <a  target="_blank" href="https://www.facebook.com/wowthemesnet/"><i class="fa fa-facebook"></i></a>
+                                <span class="dot"></span>
+                                <a target="_blank" href="https://plus.google.com/s/wowthemesnet/top">
+                                    <i class="fa fa-google-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+<#--                    <div class="row">-->
+<#--                        <a target="_blank" href="https://twitter.com/wowthemesnet" class="btn follow">Follow</a>-->
+<#--                    </div>-->
+                </form>
+            </div>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <h2>${usuario.username}</h2>
-            </div>
-            <div class="row">
-                <span class="author-description"></span>
-            </div>
-            <div class="row">
-                <div class="sociallinks"><a  target="_blank" href="https://www.facebook.com/wowthemesnet/"><i class="fa fa-facebook"></i></a> <span class="dot"></span> <a target="_blank" href="https://plus.google.com/s/wowthemesnet/top"><i class="fa fa-google-plus"></i></a></div>
-            </div>
-            <div class="row">
-                <a target="_blank" href="https://twitter.com/wowthemesnet" class="btn follow">Follow</a>
-            </div>
-        </div>
+    </div>
 </div>
 <!-- End Top Author Meta
 ================================================== -->
