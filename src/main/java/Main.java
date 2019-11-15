@@ -475,6 +475,11 @@ public class Main {
             response.redirect("/articulo/" + String.valueOf(request.params("idArticulo")));
             return null;
         }, freeMarkerEngine);
+        Spark.get("/eliminarArticulo/:idArticulo", (request, response) -> {
+            articuloServices.borrarArticulo(Integer.parseInt(request.params("idArticulo")));
+            response.redirect("/home");
+            return null;
+        }, freeMarkerEngine);
 //        before("/crearArticulo",(request, response) -> {
 //            Usuario usuario = request.session().attribute("usuario");
 //            if(usuario==null){

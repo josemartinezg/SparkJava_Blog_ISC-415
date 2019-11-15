@@ -103,6 +103,13 @@
                 </ul>
             </div>
             <!-- End Tags -->
+            <div>
+                <#if usuario != "">
+                    <#if isAdmin || usuario == articulo.autor>
+                        <span class="btn btn-danger "><a class="text-white" href="/eliminarArticulo/${articulo.id}">Eliminar</a></span>
+                    </#if>
+                </#if>
+            </div>
             <div class="comment-wrapper">
                 <div class="panel panel-info">
                     <div class="panel-heading">
@@ -136,8 +143,10 @@
 <#--                                                <span class="text-muted pull-right">-->
 <#--                                                    <small class="text-muted">30 min ago</small>-->
 <#--                                                </span>-->
-                                        <#if usuario != "" && isAdmin>
-                                            <span class="btn btn-danger btn-sm pull-right"><a class="text-white" href="/eliminarComentario/${comment.id}/${articulo.id}">Eliminar</a></span>
+                                        <#if usuario != "">
+                                            <#if isAdmin || usuario == comment.autor || usuario == articulo.autor>
+                                                <span class="btn btn-danger btn-sm pull-right"><a class="text-white" href="/eliminarComentario/${comment.id}/${articulo.id}">Eliminar</a></span>
+                                            </#if>
                                         </#if>
                                         <strong class="text-success">${comment.autor}</strong>
                                         <p>
