@@ -27,4 +27,6 @@ dependencies {
     compile "org.slf4j:slf4j-simple:1.7.21"
     // https://mvnrepository.com/artifact/org.jasypt/jasypt
     compile group: 'org.jasypt', name: 'jasypt', version: '1.9.0'
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.12.1'
 }

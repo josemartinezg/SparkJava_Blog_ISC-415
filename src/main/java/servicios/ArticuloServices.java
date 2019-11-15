@@ -3,8 +3,11 @@ package servicios;
 import encapsulacion.Articulo;
 import encapsulacion.Comentario;
 import encapsulacion.Etiqueta;
-import encapsulacion.Usuario;
-
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.FormElement;
+import org.jsoup.select.Elements;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,8 +39,11 @@ public class ArticuloServices {
                 //if (art.getCuerpo().length() <= 30 && art.getCuerpo().length() > 0)
                 art.setFecha(rs.getDate("fecha"));
                 art.setAutor(rs.getString("autor"));
-                if (art.getCuerpo().length() > 70){
-                    art.setCuerpoHome(art.getCuerpo().substring(0, 70));
+                Document doc = Jsoup.parseBodyFragment(art.getCuerpo());
+                Elements body = doc.getElementsByTag("p");
+                String artCorrected = body.text();
+                if (artCorrected.length() > 70){
+                    art.setCuerpoHome(artCorrected.substring(0, 70));
                 }else {
                     art.setCuerpoHome(art.getCuerpo());
                 }
