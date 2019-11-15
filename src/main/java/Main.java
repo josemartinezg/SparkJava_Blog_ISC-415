@@ -76,6 +76,7 @@ public class Main {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Home");
             List<Articulo> articulos = articuloServices.selectArticulos();
+            System.out.println(articulos.get(0).getListaEtiquetas());
             attributes.put("articulos", articulos);
             attributes.put("editable", "no");
             StrongTextEncryptor textEncryptor = new StrongTextEncryptor();

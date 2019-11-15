@@ -41,6 +41,18 @@ public class ArticuloServices {
                 }else {
                     art.setCuerpoHome(art.getCuerpo());
                 }
+                String consultaSqlAtributo = "SELECT * FROM ETIQUETA WHERE ARTICULO = ?;";
+                PreparedStatement preparedStatementAtributo = con.prepareStatement(consultaSqlAtributo);
+                preparedStatementAtributo.setLong(1, art.getId());
+                ResultSet rsArticulo = preparedStatementAtributo.executeQuery();
+                ArrayList<Etiqueta> misEtiquetas = new ArrayList<>();
+                while (rsArticulo.next()) {
+                    Etiqueta tag = new Etiqueta();
+                    tag.setArticulo((int) art.getId());
+                    tag.setEtiqueta(rsArticulo.getString("nombre_etiqueta"));
+                    misEtiquetas.add(tag);
+                }
+                art.setListaEtiquetas(misEtiquetas);
                 System.out.println(art.getTitulo());
                 lista.add(art);
             }
@@ -74,7 +86,6 @@ public class ArticuloServices {
                 art.setId(rs.getInt("id"));
                 art.setTitulo(rs.getString("titulo"));
                 art.setCuerpo(rs.getString("cuerpo"));
-                //if (art.getCuerpo().length() <= 30 && art.getCuerpo().length() > 0)
                 art.setFecha(rs.getDate("fecha"));
                 art.setAutor(rs.getString("autor"));
                 if (art.getCuerpo().length() > 70){
@@ -82,7 +93,19 @@ public class ArticuloServices {
                 }else {
                     art.setCuerpoHome(art.getCuerpo());
                 }
-                System.out.println(art.getTitulo());
+                String consultaSqlAtributo = "SELECT * FROM ETIQUETA WHERE ARTICULO = ?;";
+                PreparedStatement preparedStatementAtributo = con.prepareStatement(consultaSqlAtributo);
+                preparedStatementAtributo.setLong(1, art.getId());
+                ResultSet rsArticulo = preparedStatementAtributo.executeQuery();
+                ArrayList<Etiqueta> misEtiquetas = new ArrayList<>();
+                while (rsArticulo.next()) {
+                    Etiqueta tag = new Etiqueta();
+                    tag.setArticulo((int) art.getId());
+                    tag.setEtiqueta(rsArticulo.getString("nombre_etiqueta"));
+                    misEtiquetas.add(tag);
+                }
+                art.setListaEtiquetas(misEtiquetas);
+                System.out.println("Articulos Services 96: " + misEtiquetas.toString());
                 lista.add(art);
             }
 
