@@ -259,7 +259,6 @@ public class ArticuloServices {
     /* Borrar Artículo DELETE*/
     public boolean borrarArticulo(int idArticulo){
         boolean ok =false;
-
         Connection con = null;
         try {
             con = DataBaseServices.getInstance().getConexion();
@@ -268,15 +267,18 @@ public class ArticuloServices {
             preparedStatementComentarios.setInt(1, idArticulo);
             preparedStatementComentarios.executeUpdate();
 
+            String queryTags = "DELETE FROM etiqueta WHERE articulo = ?";
+            PreparedStatement prepareStatementEtiquetas = con.prepareStatement(queryTags);
+            prepareStatementEtiquetas.setInt(1, idArticulo);
+            int fila2 = prepareStatementEtiquetas.executeUpdate();
+
             String query = "DELETE FROM articulo WHERE id = ?";
-            //
             PreparedStatement prepareStatement = con.prepareStatement(query);
 
             //Indica el where...
             prepareStatement.setInt(1, idArticulo);
-            //
             int fila = prepareStatement.executeUpdate();
-            ok = fila > 0 ;
+            ok = fila > 0 && fila2 > 0;
 
         } catch (SQLException ex) {
             ex.printStackTrace();

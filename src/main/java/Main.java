@@ -34,6 +34,7 @@ public class Main {
     private static String encriptorClave = "aHaf920@_9";
 
     public static void main(String[] args) throws SQLException {
+        port(8080);
         InicioServices.iniciarDb();
         DataBaseServices.getInstance().testConexion();
         InicioServices.crearTablas();
@@ -476,6 +477,7 @@ public class Main {
             response.redirect("/articulo/" + String.valueOf(request.params("idArticulo")));
             return null;
         }, freeMarkerEngine);
+
         Spark.get("/eliminarArticulo/:idArticulo", (request, response) -> {
             articuloServices.borrarArticulo(Integer.parseInt(request.params("idArticulo")));
             response.redirect("/home");
